@@ -1,0 +1,43 @@
+<h1 class="text-center">Health Analytics Page</h1>
+<div class="row">
+    <div class="{{ xsColWidth 4 }} col-xs-offset-1">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">24 Hour Average</h2>
+            </div>
+            <div class="panel-body">{{ mgPerDeciLiter infoObj.TwentyFourHourAvg }}</div>
+        </div>
+
+    </div>
+    <div class="{{ xsColWidth 4 }} col-xs-offset-2">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">Blood Sugar In Last 24 Hours</h2>
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each infoObj.TwentyFourHourBloodSugar as |BS|}}
+                        <tr>
+                            <td>{{ BS.time }}</td>
+                            <td>{{ mgPerDeciLiter BS.blood_sugar }}</td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="{{ xsColWidth 4 }} col-xs-offset-1">
+    </div>
+    <div class="{{ xsColWidth 4 }} col-xs-offset-2">
+    </div>
+</div>

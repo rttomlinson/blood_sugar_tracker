@@ -15,7 +15,8 @@ module.exports = {
     */
     return User.create({
       email: "admin@admin.com",
-      hashedPassword: "admin"
+      hashedPassword: "admin",
+      profile_id: 1
     });
     // return queryInterface.bulkInsert("Users", [{
     //   email: "admin@admin.com",

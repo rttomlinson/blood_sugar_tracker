@@ -51,6 +51,7 @@ module.exports = (User, passport, helpers, app) => {
     //-------------------
     app.use((req, res, next) => {
         if (req.user) res.locals.currentUser = req.user;
+        console.log("value of currentUser in auth", res.locals.currentUser);
         next();
     });
 
@@ -128,7 +129,7 @@ module.exports = (User, passport, helpers, app) => {
         failureRedirect: h.loginPath()
     });
     // ----------------------------------------
-    // Create
+    // Login Handler
     // ----------------------------------------
     app.post('/sessions/new', newSessionStrat);
 

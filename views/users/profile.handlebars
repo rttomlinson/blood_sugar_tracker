@@ -1,0 +1,18 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Measurement</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each infoObj.profile as |info|}}
+        <tr>
+            {{# each info as |value| }}
+            <td>{{ @key }}</td>
+            <td>{{ value }}</td>
+            {{/each}}
+        </tr>
+        {{/each}}
+    </tbody>
+</table>

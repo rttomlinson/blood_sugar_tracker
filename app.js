@@ -108,127 +108,15 @@ wagner.invoke(require('./services/auth'), {
 });
 
 
-
-
-//Shorten helpers for use in auth and routers
-const h = helpers.registered;
-
-let forLoggedOut = function(req, res, next) {
-    if (req.user) {
-        return res.redirect('/');
-    }
-    next();
-};
-let forLoggedIn = function(req, res, next) {
-    if (!req.user) {
-        return res.redirect('/login');
-    }
-    next();
-};
 //----------------------------
 //Routers
 //----------------------------
 
 app.use('/records', wagner.invoke(require("./routes/records")));
 
+app.use('/', wagner.invoke(require("./routes/sessions")));
 
-
-
-
-//create new user
-const db = require("./models/sequelize")("seeds");
-const User = db.User;
-const BSR = db.BloodSugarRecord;
-const sequelize = db.sequelize;
-
-
-
-app.get(h.loginPath(), function(req, res, next) {
-    res.render("sessions/new");
-});
-
-//Be aware that the home path is located in the users_helper file
-app.get('/', function(req, res, next) {
-    res.redirect(h.homePath());
-});
-app.get(h.homePath(), function(req, res, next) {
-    let user = req.user;
-
-    res.locals.currentUser = req.user;
-
-    res.render("users/show");
-});
-
-app.get(h.newUserPath(), function(req, res, next) {
-    res.render('users/new');
-});
-
-app.post(h.newUserPath(), function(req, res, next) {
-    let user;
-    const userParams = {
-        email: req.body.user.email,
-        hashedPassword: req.body.user.password
-    };
-    //first create the user
-    sequelize.transaction((t) => {
-        return User.create(userParams, {
-                transaction: t
-            })
-            // .spread(result => {
-            //     user = result;
-            //     //now create initial purse for this user
-            //     // return Purse.create({
-            //     //     user_id: user.id
-            //     // }, {
-            //     //     transaction: t
-            //     // });
-            // })
-            .then((result) => {
-                user = result;
-                req.login(user, err => {
-                    return err ? next(err) : res.redirect('/');
-                });
-            })
-            .catch(next);
-    });
-});
-
-app.get('/user/stats', (req, res) => {
-    console.log("inside stats path");
-    //We want to get all the medical info
-    //Only have bloodsugars for now
-    // BSR.getAllBloodSugarForUser(req.user.id)
-    // .then(bloodSugars => {
-    //     console.log("all bloodSugars", bloodSugars);
-    //     res.end("We got em!");
-    // });
-    // BSR.getLastFiftyBloodSugarForUser(req.user.id)
-    // .then(bloodSugars => {
-    //     console.log("all bloodSugars", bloodSugars.length);
-    //     res.end("We got em!");
-    // });
-    // BSR.getBloodSugarInLast24Hours(req.user.id)
-    // .then(bloodSugars => {
-    //     console.log("all bloodSugars", bloodSugars);
-    //     res.end("We got em!");
-    // });
-    BSR.getAverageBloodSugarInLast24Hours(req.user.id)
-    .then(bloodSugars => {
-        console.log("all bloodSugars", bloodSugars);
-        res.end("We got em!");
-    });
-});
-
-app.get(h.profilePath, (req, res) => {
-    //We want to get all the information about the user and display
-    res.end("Profile path");
-});
-
-
-
-
-
-
+app.use('/user', wagner.invoke(require("./routes/users")));
 
 
 // ----------------------------------------

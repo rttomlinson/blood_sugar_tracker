@@ -5,12 +5,16 @@ module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define('User', {
     email: DataTypes.STRING,
     hashedPassword: DataTypes.STRING,
-    token: DataTypes.STRING
+    token: DataTypes.STRING,
+    profile_id: DataTypes.INTEGER
   }, {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
         User.hasMany(models.BloodSugarRecord, {
+          foreignKey: "user_id"
+        });
+        User.hasOne(models.Profile, {
           foreignKey: "user_id"
         });
 

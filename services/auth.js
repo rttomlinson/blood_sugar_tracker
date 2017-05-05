@@ -139,9 +139,7 @@ module.exports = (User, passport, helpers, app) => {
     const onDestroy = (req, res) => {
         // Delete all keys and
         // redirect
-        for (let key in req.session) {
-            delete req.session[key];
-        }
+        req.session.destroy();
         req.method = 'GET';
         res.redirect(_options.loginUrl);
     };

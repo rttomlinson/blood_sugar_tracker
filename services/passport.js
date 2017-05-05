@@ -12,10 +12,9 @@ module.exports = wagner => {
       usernameField: "email",
       passwordField: "password"
     }, function(email, password, done) {
-      console.log("attempting to authenticate");
       User.findOne({
-          email
-        })
+          where: {email: email}
+      })
         .then(user => {
           if (!user || !user.validatePassword(password)) {
             return done(null, false, {

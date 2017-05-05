@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/rttomlinson/mar-hackaton-fantastic-octo-lamp#readme",
   "dependencies": {
+    "bcrypt": "^1.0.2",
     "body-parser": "^1.17.1",
     "dotenv": "^4.0.0",
     "express": "^4.15.2",
@@ -37,6 +38,8 @@
     "pg": "^6.1.5",
     "pg-hstore": "^2.3.2",
     "sequelize": "^3.30.4",
+    "shortid": "^2.2.8",
+    "underscore": "^1.8.3",
     "wagner-core": "^0.2.0"
   },
   "devDependencies": {

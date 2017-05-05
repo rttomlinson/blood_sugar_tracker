@@ -16,6 +16,8 @@
 
             <ul class="nav navbar-nav navbar-right">
                 {{#if currentUser }}
+                <li><a href="{{ statsPath }}">Stats</a></li>
+                <li><a href="{{ profilePath }}">Profile</a></li>
                 <li><a href="{{ logoutPath }}">Logout</a></li>
                 {{else }}
                 <li><a href="{{ loginPath }}">Login</a></li>

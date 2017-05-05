@@ -7,20 +7,7 @@ UnitsHelper.years = (num) => `${num} years`;
 UnitsHelper.kg = (num) => `${num} kg`;
 
 UnitsHelper.unitsWrapper = (measurement, num) => {
-    let unit;
-    switch (measurement) {
-        case 'weight':
-            unit = "kg";
-            break;
-        case 'height':
-            unit = "cm";
-            break;
-        case 'age':
-            unit = 'years';
-            break;
-        default:
-            break;
-    }
+    let unit = UnitsHelper.units(measurement);
     return `${num} ${unit}`;
 
 };

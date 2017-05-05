@@ -81,11 +81,9 @@ module.exports = (User, sequelize, BloodSugarRecord, Profile, helpers) => {
                 }
             })
             .then(profile => {
-
                 res.redirect("back");
             })
             .catch(next);
     });
-
     return router;
 };

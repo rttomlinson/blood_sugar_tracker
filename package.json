@@ -1,0 +1,46 @@
+{
+  "name": "mar-hackaton-fantastic-octo-lamp",
+  "version": "1.0.0",
+  "description": "Blood Sugar Tracker",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "npm run whichnodemon && nodemon --exec npm run jasmine || npm run jasmine",
+    "start-dev": "npm run whichnodemon && nodemon app.js || node app.js",
+    "whichnodemon": "which nodemon > /dev/null",
+    "jasmine": "./node_modules/jasmine/bin/jasmine.js",
+    "sql": "./node_modules/sequelize-cli/bin/sequelize",
+    "sql:migrate:undo": "npm run sql db:migrate:undo:all",
+    "sql:migrate": "npm run sql db:migrate",
+    "sql:seed:undo": "npm run sql db:seed:undo:all",
+    "sql:seed": "npm run sql db:seed:all",
+    "sql:s": "npm run sql:migrate:undo && npm run sql:migrate && npm run sql:seed:undo && npm run sql:seed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rttomlinson/mar-hackaton-fantastic-octo-lamp.git"
+  },
+  "author": "Renzo Tomlinson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rttomlinson/mar-hackaton-fantastic-octo-lamp/issues"
+  },
+  "homepage": "https://github.com/rttomlinson/mar-hackaton-fantastic-octo-lamp#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.2",
+    "express-handlebars": "^3.0.0",
+    "express-session": "^1.15.2",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "pg": "^6.1.5",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^3.30.4",
+    "wagner-core": "^0.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0",
+    "sequelize-cli": "^2.7.0"
+  }
+}

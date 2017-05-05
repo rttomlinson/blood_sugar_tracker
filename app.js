@@ -2,6 +2,16 @@ const express = require("express");
 const app = express();
 const wagner = require("wagner-core");
 
+
+//-----------------------
+//Set Environment Variables if Necessary
+//-----------------------
+if (process.env.NODE_ENV !== 'production'){
+    require('dotenv').config();
+}
+
+
+
 const helpers = require('./helpers');
 wagner.factory("helpers", function() {
     return helpers;

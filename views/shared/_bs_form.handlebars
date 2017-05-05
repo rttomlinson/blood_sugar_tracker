@@ -5,15 +5,15 @@
     <div class="panel-body">
         <form action="/records/bloodsugar" method="post">
             <input type="hidden" name="user-id" value="{{currentUser.id}}">
-            <div class="form-group row">
-                <label for="blood-sugar" class="col-2 col-form-label">Number</label>
-                <div class="col-10">
+            <div class="form-group">
+                <label for="blood-sugar" class="col-form-label">Number</label>
+                <div class="">
                     <input class="form-control" type="number" id="blood-sugar" name="blood-sugar">
                 </div>
             </div>
-            <div class="form-group row">
-                <label for="time-of-reading" class="col-2 col-form-label">Time</label>
-                <div class="col-10">
+            <div class="form-group">
+                <label for="time-of-reading" class="col-form-label">Time</label>
+                <div class="">
                     <input class="form-control" type="datetime-local" value="{{currentTime}}" id="time-of-reading" name="time-of-reading">
                 </div>
             </div>

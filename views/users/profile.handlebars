@@ -1,18 +1,36 @@
-<table class="table">
-    <thead>
-        <tr>
-            <th>Category</th>
-            <th>Measurement</th>
-        </tr>
-    </thead>
-    <tbody>
-        {{#each infoObj.profile as |info|}}
-        <tr>
-            {{# each info as |value| }}
-            <td>{{ @key }}</td>
-            <td>{{ value }}</td>
+<div class="row">
+    <div class="col-xs-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Measurement</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each infoObj.profile as |info|}}
+                <tr>
+                    {{# each info as |value| }}
+                    <td>{{ @key }}</td>
+                    <td>{{ value }}</td>
+                    {{/each}}
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        <button id="profile-edit-button" class="btn btn-primary">Edit Form</button>
+    </div>
+
+    <div class="hidden col-sm-6" id="profile-edit-form">
+        <form action="/user/profile/edit" method="post">
+            {{#each infoObj.profile as |info|}}
+            <div class="form-group">
+                {{# each info as |value| }}
+                <label>{{ @key }} ({{ units @key }})</label>
+                <input class="form-control" type="text" value="{{ value }}" name="profile[{{ @key }}]"> {{/each}}
+            </div>
             {{/each}}
-        </tr>
-        {{/each}}
-    </tbody>
-</table>
+            <button type="submit" class="btn btn-danger">Update Info</button>
+        </form>
+    </div>
+</div>

@@ -33,8 +33,6 @@ module.exports = (User, sequelize, BloodSugarRecord, Profile, helpers) => {
 
     router.get('/profile', (req, res, next) => {
         //We want to get all the information about the user and display
-        console.log("res.locals.currentUser should have profile information");
-        console.log(res.locals.currentUser);
         //Get profile of the user
         Profile.findOne({
                 where: {
@@ -62,6 +60,29 @@ module.exports = (User, sequelize, BloodSugarRecord, Profile, helpers) => {
                 res.render("users/profile", {
                     infoObj
                 });
+            })
+            .catch(next);
+    });
+
+
+    router.post('/profile/edit', (req, res, next) => {
+        //We want to get all the information about the user and display
+        let weight = req.body.profile.weight;
+        let height = req.body.profile.height;
+        let age = req.body.profile.age;
+        //Get profile of the user
+        Profile.update({
+                weight,
+                height,
+                age
+            }, {
+                where: {
+                    user_id: req.user.id
+                }
+            })
+            .then(profile => {
+
+                res.redirect("back");
             })
             .catch(next);
     });

@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const wagner = require("wagner-core");
 
-
 //-----------------------
 //Set Environment Variables if Necessary
 //-----------------------
@@ -10,18 +9,14 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 
-
-
 const helpers = require('./helpers');
 wagner.factory("helpers", function() {
     return helpers;
 });
 
-
 require("./models/sequelize/")(wagner);
 //get passport
 require("./services/passport")(wagner);
-
 
 
 // ----------------------------------------
@@ -107,17 +102,33 @@ wagner.invoke(require('./services/auth'), {
     app: app
 });
 
-
+const h = helpers.required;
 //----------------------------
 //Routers
 //----------------------------
 
 app.use('/records', wagner.invoke(require("./routes/records")));
 
-app.use('/', wagner.invoke(require("./routes/sessions")));
-
 app.use('/user', wagner.invoke(require("./routes/users")));
 
+
+//Be aware that the home path is located in the users_helper file
+app.get('/', function(req, res, next) {
+    res.redirect(h.homePath());
+});
+// ----------------------------------------
+// Destroy
+// ----------------------------------------
+const onDestroy = (req, res) => {
+    // Delete all keys and
+    // redirect
+    req.session.destroy();
+    req.method = 'GET';
+    res.redirect(h.loginPath());
+};
+app.get('/logout', onDestroy);
+app.delete('/logout', onDestroy);
+app.delete('/sessions', onDestroy);
 
 // ----------------------------------------
 // Server

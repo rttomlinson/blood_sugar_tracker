@@ -2,8 +2,9 @@
 //try to auth by username as password
 const url = require("url");
 
-module.exports = (User, passport, helpers, app) => {
-
+module.exports = (User, passport, helpers, app, sequelize) => {
+    //Shorten helpers for use in auth and routers
+    const h = helpers.registered;
     let options = {
         findUserByEmail: (email) => {
             return User.findOne({
@@ -27,11 +28,7 @@ module.exports = (User, passport, helpers, app) => {
         loginView: 'sessions/new',
         unauthenticatedPaths: [
             '/login',
-            '/logout',
-            '/sessions',
-            '/sessions/new',
-            '/user/new',
-            '/users'
+            '/user/new'
         ]
     };
 
@@ -40,7 +37,7 @@ module.exports = (User, passport, helpers, app) => {
     for (let key in options) {
         _options[key] = options[key];
     }
-
+    
 
     //start passport service and session
     app.use(passport.initialize());
@@ -49,9 +46,9 @@ module.exports = (User, passport, helpers, app) => {
     //-------------------
     //Set res.locals.currentUser for access in templates
     //-------------------
+
     app.use((req, res, next) => {
         if (req.user) res.locals.currentUser = req.user;
-        console.log("value of currentUser in auth", res.locals.currentUser);
         next();
     });
 
@@ -103,27 +100,21 @@ module.exports = (User, passport, helpers, app) => {
         // Redirect if cannot proceed
         canProceed ? next() : res.redirect(_options.loginUrl);
     });
-
-
-    // ----------------------------------------
-    // New
-    // ----------------------------------------
+    
+    
+    //------------------------------
+    //User login
+    //-----------------------------
     const onNew = (req, res) => {
 
         // Redirect to root if already logged in
         req.user ?
-            res.redirect(_options.rootUrl) :
-            res.render(_options.loginView);
+            res.redirect(h.rootPath()) :
+            res.render("sessions/new");
     };
     app.get('/login', onNew);
-    app.get('/sessions/new', onNew);
-
-
-
-    //Shorten helpers for use in auth and routers
-    const h = helpers.registered;
-
-    //define strategy for login with local auth
+    
+        //define strategy for login with local auth
     let newSessionStrat = passport.authenticate("local", {
         successRedirect: h.homePath(),
         failureRedirect: h.loginPath()
@@ -131,21 +122,45 @@ module.exports = (User, passport, helpers, app) => {
     // ----------------------------------------
     // Login Handler
     // ----------------------------------------
-    app.post('/sessions/new', newSessionStrat);
+    app.post('/login', newSessionStrat);
+    
+//------------------------------------------------------------------//
 
+    //------------------------------
+    //User Registration
+    //------------------------------
+    app.get(h.newUserPath(), function(req, res, next) {
+        res.render('users/new');
+    });
 
-    // ----------------------------------------
-    // Destroy
-    // ----------------------------------------
-    const onDestroy = (req, res) => {
-        // Delete all keys and
-        // redirect
-        req.session.destroy();
-        req.method = 'GET';
-        res.redirect(_options.loginUrl);
-    };
-    app.get('/logout', onDestroy);
-    app.delete('/logout', onDestroy);
-    app.delete('/sessions', onDestroy);
+    app.post(h.newUserPath(), function(req, res, next) {
+        let user;
+        const userParams = {
+            email: req.body.user.email,
+            hashedPassword: req.body.user.password
+        };
+        //first create the user
+        sequelize.transaction((t) => {
+            return User.create(userParams, {
+                    transaction: t
+                })
+                // .spread(result => {
+                //     user = result;
+                //     //now create initial purse for this user
+                //     // return Purse.create({
+                //     //     user_id: user.id
+                //     // }, {
+                //     //     transaction: t
+                //     // });
+                // })
+                .then((result) => {
+                    user = result;
+                    req.login(user, err => {
+                        return err ? next(err) : res.redirect('/');
+                    });
+                })
+                .catch(next);
+        });
+    });
 
 };

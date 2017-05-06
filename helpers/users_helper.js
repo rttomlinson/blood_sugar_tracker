@@ -3,7 +3,7 @@ const UsersHelper = {};
 
 UsersHelper.usersPath = () => `/users`;
 UsersHelper.userPath = () => `/user`;
-
+UsersHelper.rootPath = () => `/`;
 UsersHelper.homePath = () => `/user`;
 UsersHelper.statsPath = () => `/user/stats`;
 UsersHelper.profilePath = () => `/user/profile`;

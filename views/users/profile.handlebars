@@ -12,7 +12,7 @@
                 <tr>
                     {{# each info as |value| }}
                     <td>{{ @key }}</td>
-                    <td>{{ value }}</td>
+                    <td>{{ unitsWrapper @key value }}</td>
                     {{/each}}
                 </tr>
                 {{/each}}

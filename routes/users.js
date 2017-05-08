@@ -5,11 +5,11 @@ const router = express.Router();
 module.exports = (User, sequelize, BloodSugarRecord, Profile, helpers) => {
     const BSR = BloodSugarRecord;
     const h = helpers.registered;
-    
-    router.get(h.homePath(), function(req, res, next) {
+
+    router.get("/", function(req, res, next) {
         res.render("users/show");
     });
-    
+
     router.get('/stats', (req, res, next) => {
         //We want to get all the medical info
         //Only have bloodsugars for now

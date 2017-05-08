@@ -102,7 +102,7 @@ wagner.invoke(require('./services/auth'), {
     app: app
 });
 
-const h = helpers.required;
+const h = helpers.registered;
 //----------------------------
 //Routers
 //----------------------------

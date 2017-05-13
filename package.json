@@ -1,5 +1,5 @@
 {
-  "name": "mar-hackaton-fantastic-octo-lamp",
+  "name": "blood_sugar_tracker",
   "version": "1.0.0",
   "description": "Blood Sugar Tracker",
   "main": "app.js",
@@ -45,5 +45,8 @@
   "devDependencies": {
     "nodemon": "^1.11.0",
     "sequelize-cli": "^2.7.0"
+  },
+  "engines": {
+    "node": "7.10.0"
   }
 }

@@ -37,11 +37,11 @@ module.exports = (User, passport, helpers, app, sequelize) => {
     for (let key in options) {
         _options[key] = options[key];
     }
-    
+
 
     //start passport service and session
     app.use(passport.initialize());
-    app.use(passport.session());
+    // app.use(passport.session());
     //if user is already logged in then req.user should be set
     //-------------------
     //Set res.locals.currentUser for access in templates
@@ -100,8 +100,8 @@ module.exports = (User, passport, helpers, app, sequelize) => {
         // Redirect if cannot proceed
         canProceed ? next() : res.redirect(_options.loginUrl);
     });
-    
-    
+
+
     //------------------------------
     //User login
     //-----------------------------
@@ -113,18 +113,20 @@ module.exports = (User, passport, helpers, app, sequelize) => {
             res.render("sessions/new");
     };
     app.get('/login', onNew);
-    
-        //define strategy for login with local auth
+
+    //define strategy for login with local auth
     let newSessionStrat = passport.authenticate("local", {
-        successRedirect: h.homePath(),
-        failureRedirect: h.loginPath()
+        session: false
     });
     // ----------------------------------------
     // Login Handler
     // ----------------------------------------
-    app.post('/login', newSessionStrat);
-    
-//------------------------------------------------------------------//
+    app.post('/login', newSessionStrat, (req, res, next) => {
+        console.log('auth successful', req.user);
+        res.json(req.user);
+    });
+
+    //------------------------------------------------------------------//
 
     //------------------------------
     //User Registration
@@ -155,9 +157,7 @@ module.exports = (User, passport, helpers, app, sequelize) => {
                 // })
                 .then((result) => {
                     user = result;
-                    req.login(user, err => {
-                        return err ? next(err) : res.redirect('/');
-                    });
+                    res.status(201).json(user);
                 })
                 .catch(next);
         });

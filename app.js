@@ -30,13 +30,13 @@ app.use(bodyParser.urlencoded({
 //--------------------
 //Express session
 //--------------------
-const expressSession = require("express-session");
-app.use(expressSession({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {}
-}));
+// const expressSession = require("express-session");
+// app.use(expressSession({
+//     secret: 'keyboard cat',
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: {}
+// }));
 
 
 // ----------------------------------------
@@ -133,7 +133,7 @@ app.delete('/sessions', onDestroy);
 // ----------------------------------------
 // Server
 // ----------------------------------------
-const port = process.env.PORT ||
+const port = 8081 || process.env.PORT ||
     process.argv[2] ||
     3000;
 const host = 'localhost';

@@ -26,6 +26,7 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+app.use(bodyParser.json());
 
 //--------------------
 //Express session
@@ -38,6 +39,23 @@ app.use(bodyParser.urlencoded({
 //     cookie: {}
 // }));
 
+//--------------------------
+//Logger
+//--------------------------
+const logger = require('morgan');
+app.use(logger('dev'));
+
+//---------------------------------------
+//Set response headers for CORS
+//---------------------------------------
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials");
+    res.header("Access-Control-Allow-Credentials", "true");
+    next();
+});
+
 
 // ----------------------------------------
 // Public
@@ -47,10 +65,10 @@ app.use(express.static(`${ __dirname }/public`));
 // ----------------------------------------
 // Referrer
 // ----------------------------------------
-app.use((req, res, next) => {
-    req.session.backUrl = req.header('Referer') || '/';
-    next();
-});
+// app.use((req, res, next) => {
+//     req.session.backUrl = req.header('Referer') || '/';
+//     next();
+// });
 
 
 // ----------------------------------------
@@ -112,9 +130,9 @@ app.use('/records', wagner.invoke(require("./routes/records")));
 app.use('/user', wagner.invoke(require("./routes/users")));
 
 
-//Be aware that the home path is located in the users_helper file
+//Provide path for checking if the server is running
 app.get('/', function(req, res, next) {
-    res.redirect(h.homePath());
+    res.status(200).end("Server is up!");
 });
 // ----------------------------------------
 // Destroy
@@ -128,7 +146,6 @@ const onDestroy = (req, res) => {
 };
 app.get('/logout', onDestroy);
 app.delete('/logout', onDestroy);
-app.delete('/sessions', onDestroy);
 
 // ----------------------------------------
 // Server
@@ -174,6 +191,7 @@ app.use('/api', (err, req, res, next) => {
 
 
 app.use((err, req, res, next) => {
+    console.error("err stack", err.stack);
     if (res.headersSent) {
         return next(err);
     }
@@ -181,8 +199,8 @@ app.use((err, req, res, next) => {
     if (err.stack) {
         err = err.stack;
     }
-    res.status(500).render('errors/500', {
-        error: err
+    res.status(500).json({
+        error: err.message
     });
 });
 

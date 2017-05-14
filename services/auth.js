@@ -28,7 +28,8 @@ module.exports = (User, passport, helpers, app, sequelize) => {
         loginView: 'sessions/new',
         unauthenticatedPaths: [
             '/login',
-            '/user/new'
+            '/user/new',
+            '/'
         ]
     };
 
@@ -105,14 +106,14 @@ module.exports = (User, passport, helpers, app, sequelize) => {
     //------------------------------
     //User login
     //-----------------------------
-    const onNew = (req, res) => {
+    // const onNew = (req, res) => {
 
-        // Redirect to root if already logged in
-        req.user ?
-            res.redirect(h.rootPath()) :
-            res.render("sessions/new");
-    };
-    app.get('/login', onNew);
+    //     // Redirect to root if already logged in
+    //     req.user ?
+    //         res.redirect(h.rootPath()) :
+    //         res.render("sessions/new");
+    // };
+    // app.get('/login', onNew);
 
     //define strategy for login with local auth
     let newSessionStrat = passport.authenticate("local", {
@@ -122,7 +123,6 @@ module.exports = (User, passport, helpers, app, sequelize) => {
     // Login Handler
     // ----------------------------------------
     app.post('/login', newSessionStrat, (req, res, next) => {
-        console.log('auth successful', req.user);
         res.json(req.user);
     });
 
@@ -131,15 +131,24 @@ module.exports = (User, passport, helpers, app, sequelize) => {
     //------------------------------
     //User Registration
     //------------------------------
-    app.get(h.newUserPath(), function(req, res, next) {
-        res.render('users/new');
-    });
+    // app.get(h.newUserPath(), function(req, res, next) {
+    //     res.render('users/new');
+    // });
 
     app.post(h.newUserPath(), function(req, res, next) {
         let user;
+        const {
+            email,
+            password,
+            passwordconfirm
+        } = req.body;
+        //TODO: Valid that passwords match
+        if (password !== passwordconfirm) {
+            console.error("password not matching, about user creation");
+        }
         const userParams = {
-            email: req.body.user.email,
-            hashedPassword: req.body.user.password
+            email,
+            hashedPassword: password
         };
         //first create the user
         sequelize.transaction((t) => {

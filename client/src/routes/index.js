@@ -5,20 +5,22 @@ import {
 }
 from 'react-router-dom';
 
-import App from '../components/App';
-
 import NotFoundPage from '../components/pages/NotFoundPage';
 import HomePage from '../components/pages/HomePage';
-import Login from '../components/auth/Login';
+import LoginContainer from '../containers/LoginContainer';
+import RegisterContainer from '../containers/RegisterContainer';
+
+import Dashboard from '../components/Dashboard';
+import RequireAuth from '../components/auth/RequireAuth';
 
 const Routes = (
-    <App>
-        <Switch>
-            <Route exact path="/" component={HomePage} />
-            <Route path='/login' component={Login} />
-            <Route path='*' component={NotFoundPage} />
-        </Switch>
-    </App>
+    <Switch>
+        <Route exact path="/" component={HomePage} />
+        <Route path='/login' component={LoginContainer} />
+        <Route path='/register' component={RegisterContainer} />
+        <Route path='/dashboard' component={RequireAuth(Dashboard)} />
+        <Route path='*' component={NotFoundPage} />
+    </Switch>
 );
 
 export default Routes;

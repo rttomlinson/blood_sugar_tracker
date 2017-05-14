@@ -3,50 +3,16 @@ import {
     combineReducers
 }
 from 'redux';
-//import actions
+
+import authReducer from './auth_reducer';
 import {
-    AUTH_USER,
-    AUTH_ERROR,
-    UNAUTH_USER,
-    PROTECTED_TEST
+    reducer as formReducer
 }
-from '../actions/types';
+from 'redux-form';
 
-
-let INITIAL_AUTH_STATE = {
-    isFetching: false,
-    isAuthenticated: false,
-    error: null,
-    message: null
-};
-
-
-function userAuth(state = INITIAL_AUTH_STATE, action) {
-    switch (action.type) {
-        case AUTH_USER:
-            return {
-                ...state,
-                isFetching: false,
-                isAuthenticated: true,
-                error: null
-            };
-        case UNAUTH_USER:
-            return {
-                ...state,
-                isAuthenticated: false
-            };
-        case AUTH_ERROR:
-            return {
-                ...state,
-                error: "Error occurred during authorization"
-            };
-        default:
-            return state;
-    }
-
-}
-
-
-export default combineReducers({
-    userAuth
+const rootReducer = combineReducers({
+    auth: authReducer,
+    form: formReducer
 });
+
+export default rootReducer;

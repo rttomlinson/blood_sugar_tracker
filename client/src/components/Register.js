@@ -4,7 +4,7 @@ import {
 }
 from 'redux-form';
 
-const Login = ({
+const Register = ({
     onSubmit,
     handleSubmit,
     isFetching,
@@ -24,8 +24,8 @@ const Login = ({
     }
 
     return (
-        <div className="Login">
-            {isFetching ? <span>Loading...</span> : (
+        <div className="Register">
+            {isFetching ? <span>Submitting...</span> : (
             <form onSubmit={handleSubmit(onSubmit)}>
             {renderAlert()}
                 <div className="form-group">
@@ -36,11 +36,15 @@ const Login = ({
                     <label htmlFor="password">Password</label>
                     <Field name='password' className='form-control' component='input' type='password'/>
                 </div>
-                <button type="submit" className="btn btn-primary">Login</button>
+                <div className="form-group">
+                    <label htmlFor="passwordconfirm">Confirm Password</label>
+                    <Field name='passwordconfirm' className='form-control' component='input' type='password'/>
+                </div>
+                <button type="submit" className="btn btn-primary">Sign up</button>
             </form>
             )}
         </div>
     );
 };
 
-export default Login;
+export default Register;

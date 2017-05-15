@@ -4,7 +4,7 @@ import React, {
 from 'react';
 import '../App.css';
 import Header from './Header';
-
+import Footer from './Footer';
 
 
 class App extends Component {
@@ -15,7 +15,7 @@ class App extends Component {
           <div className="container">
             {this.props.children}
           </div>
-        <div>Footer Here</div>
+        <Footer />
       </div>
     );
   }

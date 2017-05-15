@@ -3,7 +3,8 @@ import {
     connect
 }
 from 'react-redux';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
+import { NavLink } from 'react-router-dom';
+import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem } from 'reactstrap';
 
 
     // const loggedIn = () => {
@@ -43,17 +44,14 @@ class Header extends React.Component {
     return (
         <Navbar color="faded" light toggleable>
           <NavbarToggler right onClick={this.toggle} />
-          <NavbarBrand href="/">Blood Glucose Tracker</NavbarBrand>
+          <NavLink className="navbar-brand" to="dashboard">Blood Glucose Tracker</NavLink>
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink href="/login">Login</NavLink>
+                <NavLink className="header-nav-item" to="/login">Login</NavLink>
               </NavItem>
             <NavItem>
-                <NavLink href="/register">Register</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="https://github.com/rttomlinson/blood_sugar_tracker">Github</NavLink>
+                <NavLink className="header-nav-item" to="/register">Register</NavLink>
               </NavItem>
             </Nav>
           </Collapse>

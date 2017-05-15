@@ -10,7 +10,7 @@ import HomePage from '../components/pages/HomePage';
 import LoginContainer from '../containers/LoginContainer';
 import RegisterContainer from '../containers/RegisterContainer';
 
-import Dashboard from '../components/Dashboard';
+import DashboardContainer from '../containers/DashboardContainer';
 import RequireAuth from '../components/auth/RequireAuth';
 
 const Routes = (
@@ -18,7 +18,7 @@ const Routes = (
         <Route exact path="/" component={HomePage} />
         <Route path='/login' component={LoginContainer} />
         <Route path='/register' component={RegisterContainer} />
-        <Route path='/dashboard' component={RequireAuth(Dashboard)} />
+        <Route path='/dashboard' component={RequireAuth(DashboardContainer)} />
         <Route path='*' component={NotFoundPage} />
     </Switch>
 );

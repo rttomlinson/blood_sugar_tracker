@@ -13,7 +13,6 @@ let INITIAL_AUTH_STATE = {
     error: null,
 };
 
-
 function userAuth(state = INITIAL_AUTH_STATE, action) {
     switch (action.type) {
         case REQUEST_TO_SERVER:
@@ -42,8 +41,5 @@ function userAuth(state = INITIAL_AUTH_STATE, action) {
         default:
             return state;
     }
-
 }
-
-
 export default userAuth;

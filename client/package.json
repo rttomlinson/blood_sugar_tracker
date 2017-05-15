@@ -5,10 +5,7 @@
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.6",
     "isomorphic-fetch": "^2.2.1",
-    "prop-types": "^15.5.10",
     "react": "^15.5.4",
-    "react-addons-css-transition-group": "^15.5.2",
-    "react-addons-transition-group": "^15.5.2",
     "react-bootstrap": "^0.31.0",
     "react-dom": "^15.5.4",
     "react-redux": "^5.0.4",
@@ -19,7 +16,8 @@
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
-    "jasmine": "^2.6.0",
+    "deep-freeze": "0.0.1",
+    "jasmine-es6": "^0.4.0",
     "nodemon": "^1.11.0",
     "react-scripts": "0.9.5"
   },
@@ -29,7 +27,7 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "jasmine": "./node_modules/jasmine/bin/jasmine.js",
-    "test-jasmine": "npm run nodemon --exec ./node_modules/jasmine/bin/jasmine.js",
+    "test-jasmine-es6": "npm run nodemon --exec ./node_modules/jasmine-es6/bin/jasmine.js",
     "nodemon": "./node_modules/nodemon/bin/nodemon.js"
   }
 }

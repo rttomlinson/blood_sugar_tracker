@@ -41,7 +41,7 @@ export function unauthUser(data) {
 
 
 //--------------------------
-//Async Server Call - loginUser
+//Async Server Call - loginUser - auth: state modifier
 //--------------------------
 export function loginUser({
     email,
@@ -85,7 +85,7 @@ export function loginUser({
 
 
 //--------------------------
-//Async Server Call - registerUser
+//Async Server Call - registerUser -- auth: state modifier
 //--------------------------
 export function registerUser({
     email,
@@ -127,3 +127,8 @@ export function registerUser({
             });
     };
 }
+
+
+//--------------------------
+//Async Server Call - registerUser -- info: state modifier
+//--------------------------

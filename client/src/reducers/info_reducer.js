@@ -2,7 +2,7 @@ import {
     GET_STATS,
     GET_PROFILE,
     TEST_ACTION,
-    ERROR,
+    GET_INFO_ERROR,
     REQUEST_TO_SERVER
 }
 from '../actions/types';
@@ -10,7 +10,9 @@ from '../actions/types';
 
 let INITIAL_INFO_STATE = {
     isFetching: false,
-    error: null
+    error: null,
+    stats: {},
+    profile: {}
 };
 
 function infoFetch(state = INITIAL_INFO_STATE, action) {
@@ -34,7 +36,7 @@ function infoFetch(state = INITIAL_INFO_STATE, action) {
                 profile: action.data,
                 isFetching: false
             };
-        case ERROR:
+        case GET_INFO_ERROR:
             return {
                 ...state,
                 error: "Error occurred during fetching",

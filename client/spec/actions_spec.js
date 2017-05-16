@@ -13,14 +13,21 @@ const {
 } = require('../src/actions/types');
 
 describe("info reducer", function() {
-    it("returns isFetching true when dispatching REQUEST_TO_SERVER", function(done) {
-        const initialState = {
-            isFetching: false
+    let initialState;
+    beforeEach(function() {
+        initialState = {
+            isFetching: false,
+            error: null,
+            stats: {},
+            profile: {}
         };
+    })
+    it("returns isFetching true when dispatching REQUEST_TO_SERVER", function(done) {
         const action = {
             type: REQUEST_TO_SERVER
         };
         const finalState = {
+            ...initialState,
             isFetching: true
         };
         deepFreeze(initialState);
@@ -28,37 +35,40 @@ describe("info reducer", function() {
         expect(reducer(initialState, action)).toEqual(finalState);
     });
     it("returns an object at stats if info received GET_STATS", function(done) {
-        const initialState = {
-            isFetching: true
-        };
         const action = {
             type: GET_STATS,
             data: {}
         };
         const finalState = {
+            ...initialState,
             isFetching: false,
-            stats: {},
-            error: null
+            stats: {}
         };
         deepFreeze(initialState);
         deepFreeze(action);
         expect(reducer(initialState, action)).toEqual(finalState);
     });
     it("returns an object at stats if info received GET_PROFILE", function(done) {
-        const initialState = {
-            isFetching: true
-        };
         const action = {
             type: GET_PROFILE,
             data: {}
         };
         const finalState = {
+            ...initialState,
             isFetching: false,
-            profile: {},
-            error: null
+            profile: {}
         };
         deepFreeze(initialState);
         deepFreeze(action);
         expect(reducer(initialState, action)).toEqual(finalState);
     });
+    describe("stats fetching from api", function() {
+        it("calls the api with method statsFetch", function() {
+            expect(true).toBe(true);
+            
+            
+        });
+    });
+
+
 });

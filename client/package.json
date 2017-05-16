@@ -5,6 +5,7 @@
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.6",
     "isomorphic-fetch": "^2.2.1",
+    "qs": "^6.4.0",
     "react": "^15.5.4",
     "react-bootstrap": "^0.31.0",
     "react-dom": "^15.5.4",

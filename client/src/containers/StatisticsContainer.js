@@ -18,6 +18,7 @@ class StatisticsContainer extends React.Component {
 
 
 function mapStateToProps(state) {
+    //grab the token from?
     return state;
 }
 

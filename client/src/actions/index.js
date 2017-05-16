@@ -1,11 +1,15 @@
 import 'isomorphic-fetch';
+import qs from 'qs';
 import apiConfig from '../config/auth';
 import fetchHelpers from '../helpers/fetch_helpers';
 import {
     AUTH_USER,
     AUTH_ERROR,
     UNAUTH_USER,
-    REQUEST_TO_SERVER
+    REQUEST_TO_SERVER,
+    GET_PROFILE,
+    GET_STATS,
+    GET_INFO_ERROR
 }
 from './types';
 
@@ -39,6 +43,31 @@ export function unauthUser(data) {
     };
 }
 
+export function getStats(data) {
+    return {
+        type: GET_STATS,
+        data
+    };
+}
+
+export function getProfile(data) {
+    return {
+        type: GET_PROFILE,
+        data
+    };
+}
+
+export function infoError(error) {
+    return {
+        type: GET_INFO_ERROR,
+        error
+    };
+}
+
+
+
+
+
 
 //--------------------------
 //Async Server Call - loginUser - auth: state modifier
@@ -71,6 +100,10 @@ export function loginUser({
                 console.log('parsed response from server', json);
                 console.log("should dispatch action to update user");
                 dispatch(authUser(json)); //isAuthenticated gets set to true in the auth state
+                
+                //would it be okay to dispatch an action to load the dashboard here since we have the token?
+                dispatch(fetchUserStats(json.token));
+                
                 //route them to the dashboard
                 history.push('dashboard');
             })
@@ -130,5 +163,32 @@ export function registerUser({
 
 
 //--------------------------
-//Async Server Call - registerUser -- info: state modifier
+//Async Server Call - fetchUserStats -- info: state modifier
 //--------------------------
+export function fetchUserStats(
+    token
+) {
+    return (dispatch) => {
+        //expect a token
+        if (!token) {
+            //return an error
+        }
+        //attempt to auth user on api server
+        dispatch(requestToServer());
+        //send info to server and expect to get json
+        //make qs of token
+        fetch(`${apiConfig.apiServerBaseUrl}/api/user/stats?${qs.stringify({token})}`)
+            .then(fetchHelpers.checkResponse)
+            .then(fetchHelpers.parseJSON)
+            .then(json => {
+                console.log('parsed response from server', json);
+                console.log("should dispatch action to update user");
+                dispatch(getStats(json)); //isAuthenticated gets set to true in the auth state
+                //route them to the dashboard
+            })
+            .catch(err => {
+                console.error("Error handler should dispatch error");
+                dispatch(infoError(err)); //isAuthenticated gets set to true in the auth state
+            });
+    };
+}

@@ -74,17 +74,17 @@ app.use(express.static(`${ __dirname }/public`));
 // ----------------------------------------
 // Template Engine
 // ----------------------------------------
-const expressHandlebars = require('express-handlebars');
+// const expressHandlebars = require('express-handlebars');
 
-const hbs = expressHandlebars.create({
-    helpers: helpers.registered,
-    partialsDir: 'views/',
-    defaultLayout: 'main'
-});
+// const hbs = expressHandlebars.create({
+//     helpers: helpers.registered,
+//     partialsDir: 'views/',
+//     defaultLayout: 'main'
+// });
 
 
-app.engine('handlebars', hbs.engine);
-app.set('view engine', 'handlebars');
+// app.engine('handlebars', hbs.engine);
+// app.set('view engine', 'handlebars');
 
 // ----------------------------------------
 // Method Override
@@ -125,10 +125,9 @@ const h = helpers.registered;
 //Routers
 //----------------------------
 
-app.use('/records', wagner.invoke(require("./routes/records")));
+// app.use('/records', wagner.invoke(require("./routes/records")));
 
-app.use('/user', wagner.invoke(require("./routes/users")));
-
+app.use('/api/user/', wagner.invoke(require("./routes/users")));
 
 //Provide path for checking if the server is running
 app.get('/', function(req, res, next) {

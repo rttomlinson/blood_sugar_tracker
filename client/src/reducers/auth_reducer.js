@@ -26,6 +26,7 @@ function userAuth(state = INITIAL_AUTH_STATE, action) {
                 isFetching: false,
                 isAuthenticated: true,
                 error: null,
+                token: action.data.token
             };
         case UNAUTH_USER:
             return {

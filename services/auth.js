@@ -56,6 +56,7 @@ module.exports = (User, passport, helpers, app, sequelize) => {
     //if trying to access api path, check for token
     app.use('/api', function(req, res, next) {
         let token = req.query.token || req.body.token;
+        console.log("grabbing token", token);
         if (!token) {
             res.status(401).json({
                 error: "Unauthorized"

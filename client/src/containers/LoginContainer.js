@@ -36,8 +36,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch, ownProps) {
     return {
         onSubmit: (formValues) => {
-            console.log("form values", formValues);
-            console.log('ownProps', ownProps);
             dispatch(loginUser(formValues, ownProps.history));
         }
     };

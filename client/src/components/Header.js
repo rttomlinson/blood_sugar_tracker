@@ -28,8 +28,6 @@ import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem } from 'reac
 class Header extends React.Component {
   constructor(props) {
     super(props);
-    
-    console.log('check if access to history obj', this.props);
     this.toggle = this.toggle.bind(this);
     this.state = {
       isOpen: false

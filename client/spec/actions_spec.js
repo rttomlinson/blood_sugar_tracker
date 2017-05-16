@@ -3,7 +3,9 @@ const backendBaseUrl = "https://personal-projects-rttomlinson.c9users.io:8081"
 import install from 'jasmine-es6';
 install();
 import deepFreeze from 'deep-freeze';
-import reducer from '../src/reducers/info_reducer';
+import infoReducer from '../src/reducers/info_reducer';
+import authReducer from '../src/reducers/auth_reducer';
+//info Reducer actions
 const {
     GET_STATS,
     GET_PROFILE,
@@ -11,6 +13,27 @@ const {
     ERROR,
     REQUEST_TO_SERVER
 } = require('../src/actions/types');
+//auth Reducer actions
+const {
+    ADD_TOKEN
+} = require('../src/actions/types');
+describe("auth reducer", function() {
+    it("adds the token to the auth object", function() {
+        const initialState = {};
+        const action = {
+            type: ADD_TOKEN,
+            data: "token"
+        };
+        const finalState = {
+            token: "token"
+        }
+        deepFreeze(initialState);
+        deepFreeze(action);
+        expect(authReducer(initialState, action)).toEqual(finalState);
+    });
+});
+
+
 
 describe("info reducer", function() {
     let initialState;
@@ -32,21 +55,21 @@ describe("info reducer", function() {
         };
         deepFreeze(initialState);
         deepFreeze(action);
-        expect(reducer(initialState, action)).toEqual(finalState);
+        expect(infoReducer(initialState, action)).toEqual(finalState);
     });
     it("returns an object at stats if info received GET_STATS", function(done) {
         const action = {
             type: GET_STATS,
-            data: {}
+            data: { pup: "pup"}
         };
         const finalState = {
             ...initialState,
             isFetching: false,
-            stats: {}
+            stats: { pup: "pup" }
         };
         deepFreeze(initialState);
         deepFreeze(action);
-        expect(reducer(initialState, action)).toEqual(finalState);
+        expect(infoReducer(initialState, action)).toEqual(finalState);
     });
     it("returns an object at stats if info received GET_PROFILE", function(done) {
         const action = {
@@ -60,7 +83,7 @@ describe("info reducer", function() {
         };
         deepFreeze(initialState);
         deepFreeze(action);
-        expect(reducer(initialState, action)).toEqual(finalState);
+        expect(infoReducer(initialState, action)).toEqual(finalState);
     });
     describe("stats fetching from api", function() {
         it("calls the api with method statsFetch", function() {

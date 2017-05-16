@@ -7,8 +7,8 @@ from 'react-router-dom';
 import { Nav, NavItem, NavDropdown, DropdownItem, DropdownToggle, DropdownMenu } from 'reactstrap';
 
 class DashboardHeader extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.toggle = this.toggle.bind(this);
     this.state = {
@@ -23,6 +23,7 @@ class DashboardHeader extends React.Component {
   }
 
   render() {
+    const {fetchStats, token} = this.props;
     return (
       <div>
         <Nav tabs>
@@ -30,7 +31,7 @@ class DashboardHeader extends React.Component {
             <Link className="nav-link" to="/dashboard/home">Home</Link>
           </NavItem>
           <NavItem>
-            <NavLink className="nav-link" to="/dashboard/statistics">Stats</NavLink>
+            <NavLink className="nav-link" to="/dashboard/statistics" onClick={() => fetchStats(token)}>Stats</NavLink>
           </NavItem>
           <NavItem>
             <Link className="nav-link" to="/dashboard/profile">Profile</Link>

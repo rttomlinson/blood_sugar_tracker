@@ -6,23 +6,17 @@ import {
 from 'react-redux';
 import {
     fetchUserStats
-}
-from '../actions';
+} from '../actions';
 import DashboardHeader from '../components/dashboard/DashboardHeader';
 import DashboardBody from '../components/dashboard/DashboardBody';
 
 class DashboardContainer extends React.Component {
     // componentDidMount() {
-    //     //fetch data to add to state
-    //     console.log("attemping to fetch data");
-    //     console.log("token is", this.props.token);
-    //     this.props.fetchUserStats(this.props.token);
     // }
     render() {
-        console.log('props from dashboard container', this.props);
         return (
             <div>
-                <DashboardHeader />
+                <DashboardHeader {...this.props}/>
                 <DashboardBody {...this.props}/>
             </div>
         );
@@ -30,7 +24,6 @@ class DashboardContainer extends React.Component {
 }
 
 function mapStateToProps(state) {
-    //grab the token from?
     return {
         ...state,
         token: state.auth.token
@@ -38,7 +31,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
     return {
-        fetchUserStats: (token) => {
+        fetchStats: (token) => {
             dispatch(fetchUserStats(token));
         }
     };

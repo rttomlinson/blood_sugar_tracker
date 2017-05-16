@@ -5,21 +5,15 @@ import {
 }
 from 'react-redux';
 import Statistics from '../components/Statistics';
-class StatisticsContainer extends React.Component {
-    
-    render() {
-        return (
-            <div>
-                <Statistics />
-            </div>
-        );
-    }
-}
-
 
 function mapStateToProps(state) {
-    //grab the token from?
-    return state;
+    console.log("inside stats container, expect info on state.info.stats");
+    console.log(state.info.stats);
+    return {
+        twentyFourHourBloodSugar: state.info.stats.TwentyFourHourBloodSugar,
+        twentyFourHourAvg: state.info.stats.TwentyFourHourAvg,
+        lastFiftyBloodSugar: state.info.stats.lastFiftyBloodSugar
+    };
 }
 
-export default connect(mapStateToProps)(StatisticsContainer);
+export default connect(mapStateToProps)(Statistics);

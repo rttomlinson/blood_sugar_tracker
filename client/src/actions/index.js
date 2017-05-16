@@ -9,6 +9,7 @@ import {
     REQUEST_TO_SERVER,
     GET_PROFILE,
     GET_STATS,
+    ADD_TOKEN,
     GET_INFO_ERROR
 }
 from './types';
@@ -64,6 +65,13 @@ export function infoError(error) {
     };
 }
 
+export function addToken(data) {
+    return {
+        type: ADD_TOKEN,
+        data
+    };
+}
+
 
 
 
@@ -102,7 +110,7 @@ export function loginUser({
                 dispatch(authUser(json)); //isAuthenticated gets set to true in the auth state
                 
                 //would it be okay to dispatch an action to load the dashboard here since we have the token?
-                dispatch(fetchUserStats(json.token));
+                dispatch(addToken(json.token));
                 
                 //route them to the dashboard
                 history.push('dashboard');
@@ -183,7 +191,7 @@ export function fetchUserStats(
             .then(json => {
                 console.log('parsed response from server', json);
                 console.log("should dispatch action to update user");
-                dispatch(getStats(json)); //isAuthenticated gets set to true in the auth state
+                dispatch(getStats(json.data)); //isAuthenticated gets set to true in the auth state
                 //route them to the dashboard
             })
             .catch(err => {

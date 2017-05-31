@@ -1,5 +1,5 @@
-if (process.env.NODE_ENV !== 'production'){
-    require('dotenv').config();
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
 }
 
 module.exports = {
@@ -18,6 +18,7 @@ module.exports = {
     "dialect": "postgres"
   },
   "production": {
-    "username": "root",
+    "use_env_variable": "DATABASE_URL",
+    "dialect": "postgres"
   }
 };

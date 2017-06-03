@@ -17,6 +17,18 @@ module.exports = function(sequelize, DataTypes) {
         User.hasOne(models.Profile, {
           foreignKey: "userId"
         });
+        
+        //Doses
+        User.hasMany(models.UserDose, {
+          foreignKey: "userId"
+        });
+        User.belongsToMany(models.Dose, {
+          through: models.UserDose,
+          foreignKey: "userId",
+          otherKey: "doseId"
+        });
+        
+        
 
       },
       findByToken: function(token) {

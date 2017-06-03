@@ -30,7 +30,25 @@ of a single vaccine and the slow growth rate of vaccine development it would be 
 for every dose of a given vaccine rather than a dose for each given type and then assigning the doses to the vaccines)
 * 
 
+UserDose---------------------
+* completed - Has the user been administered this dose
+* userId
+* doseId
 
+//////////Repl checks
+
+User.findAll({
+    include: [{
+        model: UserDose
+    }]
+}).then(lg);
+
+User.findAll({
+    include: [{
+        model: Dose,
+        through: {}
+    }]
+}).then(lg);
 
 
 

@@ -8,9 +8,20 @@ module.exports = function(sequelize, DataTypes) {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
-        Dose.belongsTo(models.Vaccine, {
+        Dose.hasMany(models.Vaccine, {
             foreignKey: "vaccineId"
         });
+        
+        Dose.hasMany(models.UserDose, {
+          foreignKey: "doseId"
+        });
+        Dose.belongsToMany(models.User, {
+          through: models.UserDose,
+          foreignKey: "doseId",
+          otherKey: "userId"
+        });
+        
+        
       }
     }
   });

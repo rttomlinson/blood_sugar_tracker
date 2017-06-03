@@ -1,5 +1,5 @@
 'use strict';
-const models = require('../../models/sequelize')("seeds");
+const models = require('../../models/sequelize');
 const User = models.User;
 module.exports = {
   up: function(queryInterface, Sequelize) {

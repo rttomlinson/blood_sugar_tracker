@@ -14,7 +14,7 @@ module.exports = {
       recommendedAdministration: {
         type: Sequelize.INTEGER
       },
-      doseId: {
+      vaccineId: {
         type: Sequelize.INTEGER
       },
       createdAt: {

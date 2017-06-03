@@ -1,4 +1,39 @@
-# mar-hackaton-fantastic-octo-lamp.
+Database Schema
+Postresql
+
+User-----------------------
+* email
+* token
+* hashedPassword
+* profile_id
+* 
+
+Profile-------------------------
+* weight
+* height
+* age
+* user_id
+* 
+
+Vaccine------------------------
+* name
+* CPTCode
+* CVXCode
+* description
+* 
+
+Dose-------------------------
+* doseOrder
+* recommendedAdministration
+* 
+
+
+
+
+
+
+
+# Track my Vaccines
 
 Renzo Tomlinson
 

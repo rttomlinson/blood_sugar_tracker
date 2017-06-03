@@ -20,7 +20,7 @@
     "deep-freeze": "0.0.1",
     "jasmine-es6": "^0.4.0",
     "nodemon": "^1.11.0",
-    "react-scripts": "0.9.5"
+    "react-scripts": "^1.0.5"
   },
   "scripts": {
     "start": "react-scripts start",

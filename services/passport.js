@@ -31,17 +31,17 @@ module.exports = wagner => {
         //Attach strategy to passport instance
         passport.use(localStrategy);
 
-        passport.serializeUser(function(user, done) {
-            done(null, user.id);
-        });
+        // passport.serializeUser(function(user, done) {
+        //     done(null, user.id);
+        // });
 
-        passport.deserializeUser(function(id, done) {
-            User.findById(id)
-                .then(user => {
-                    done(null, user);
-                })
-                .catch(done);
-        });
+        // passport.deserializeUser(function(id, done) {
+        //     User.findById(id)
+        //         .then(user => {
+        //             done(null, user);
+        //         })
+        //         .catch(done);
+        // });
         return passport;
     });
 };

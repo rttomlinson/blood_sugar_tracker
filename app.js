@@ -26,17 +26,35 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+app.use(bodyParser.json());
 
 //--------------------
 //Express session
 //--------------------
-const expressSession = require("express-session");
-app.use(expressSession({
-    secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: false,
-    cookie: {}
-}));
+// const expressSession = require("express-session");
+// app.use(expressSession({
+//     secret: 'keyboard cat',
+//     resave: false,
+//     saveUninitialized: false,
+//     cookie: {}
+// }));
+
+//--------------------------
+//Logger
+//--------------------------
+const logger = require('morgan');
+app.use(logger('dev'));
+
+//---------------------------------------
+//Set response headers for CORS
+//---------------------------------------
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, Access-Control-Allow-Credentials");
+    res.header("Access-Control-Allow-Credentials", "true");
+    next();
+});
 
 
 // ----------------------------------------
@@ -47,26 +65,11 @@ app.use(express.static(`${ __dirname }/public`));
 // ----------------------------------------
 // Referrer
 // ----------------------------------------
-app.use((req, res, next) => {
-    req.session.backUrl = req.header('Referer') || '/';
-    next();
-});
+// app.use((req, res, next) => {
+//     req.session.backUrl = req.header('Referer') || '/';
+//     next();
+// });
 
-
-// ----------------------------------------
-// Template Engine
-// ----------------------------------------
-const expressHandlebars = require('express-handlebars');
-
-const hbs = expressHandlebars.create({
-    helpers: helpers.registered,
-    partialsDir: 'views/',
-    defaultLayout: 'main'
-});
-
-
-app.engine('handlebars', hbs.engine);
-app.set('view engine', 'handlebars');
 
 // ----------------------------------------
 // Method Override
@@ -107,14 +110,13 @@ const h = helpers.registered;
 //Routers
 //----------------------------
 
-app.use('/records', wagner.invoke(require("./routes/records")));
+// app.use('/records', wagner.invoke(require("./routes/records")));
 
-app.use('/user', wagner.invoke(require("./routes/users")));
+app.use('/api/user/', wagner.invoke(require("./routes/users")));
 
-
-//Be aware that the home path is located in the users_helper file
+//Provide path for checking if the server is running
 app.get('/', function(req, res, next) {
-    res.redirect(h.homePath());
+    res.status(200).end("Server is up!");
 });
 // ----------------------------------------
 // Destroy
@@ -128,14 +130,16 @@ const onDestroy = (req, res) => {
 };
 app.get('/logout', onDestroy);
 app.delete('/logout', onDestroy);
-app.delete('/sessions', onDestroy);
 
 // ----------------------------------------
 // Server
 // ----------------------------------------
-const port = process.env.PORT ||
-    process.argv[2] ||
-    3000;
+let port;
+if (process.env.NODE_ENV !== 'production' || process.env.NODE_ENV !== 'test') {
+    port = 8081;
+} else {
+    port = process.env.PORT || 8080;
+}
 const host = 'localhost';
 
 
@@ -174,6 +178,7 @@ app.use('/api', (err, req, res, next) => {
 
 
 app.use((err, req, res, next) => {
+    console.error("err stack", err.stack);
     if (res.headersSent) {
         return next(err);
     }
@@ -181,8 +186,8 @@ app.use((err, req, res, next) => {
     if (err.stack) {
         err = err.stack;
     }
-    res.status(500).render('errors/500', {
-        error: err
+    res.status(500).json({
+        error: err.message
     });
 });
 

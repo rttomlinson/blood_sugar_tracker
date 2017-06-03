@@ -28,7 +28,8 @@ module.exports = (User, passport, helpers, app, sequelize) => {
         loginView: 'sessions/new',
         unauthenticatedPaths: [
             '/login',
-            '/user/new'
+            '/user/new',
+            '/'
         ]
     };
 
@@ -37,11 +38,11 @@ module.exports = (User, passport, helpers, app, sequelize) => {
     for (let key in options) {
         _options[key] = options[key];
     }
-    
+
 
     //start passport service and session
     app.use(passport.initialize());
-    app.use(passport.session());
+    // app.use(passport.session());
     //if user is already logged in then req.user should be set
     //-------------------
     //Set res.locals.currentUser for access in templates
@@ -55,6 +56,7 @@ module.exports = (User, passport, helpers, app, sequelize) => {
     //if trying to access api path, check for token
     app.use('/api', function(req, res, next) {
         let token = req.query.token || req.body.token;
+        console.log("grabbing token", token);
         if (!token) {
             res.status(401).json({
                 error: "Unauthorized"
@@ -100,44 +102,54 @@ module.exports = (User, passport, helpers, app, sequelize) => {
         // Redirect if cannot proceed
         canProceed ? next() : res.redirect(_options.loginUrl);
     });
-    
-    
+
+
     //------------------------------
     //User login
     //-----------------------------
-    const onNew = (req, res) => {
+    // const onNew = (req, res) => {
 
-        // Redirect to root if already logged in
-        req.user ?
-            res.redirect(h.rootPath()) :
-            res.render("sessions/new");
-    };
-    app.get('/login', onNew);
-    
-        //define strategy for login with local auth
+    //     // Redirect to root if already logged in
+    //     req.user ?
+    //         res.redirect(h.rootPath()) :
+    //         res.render("sessions/new");
+    // };
+    // app.get('/login', onNew);
+
+    //define strategy for login with local auth
     let newSessionStrat = passport.authenticate("local", {
-        successRedirect: h.homePath(),
-        failureRedirect: h.loginPath()
+        session: false
     });
     // ----------------------------------------
     // Login Handler
     // ----------------------------------------
-    app.post('/login', newSessionStrat);
-    
-//------------------------------------------------------------------//
+    app.post('/login', newSessionStrat, (req, res, next) => {
+        res.json(req.user);
+    });
+
+    //------------------------------------------------------------------//
 
     //------------------------------
     //User Registration
     //------------------------------
-    app.get(h.newUserPath(), function(req, res, next) {
-        res.render('users/new');
-    });
+    // app.get(h.newUserPath(), function(req, res, next) {
+    //     res.render('users/new');
+    // });
 
     app.post(h.newUserPath(), function(req, res, next) {
         let user;
+        const {
+            email,
+            password,
+            passwordconfirm
+        } = req.body;
+        //TODO: Valid that passwords match
+        if (password !== passwordconfirm) {
+            console.error("password not matching, about user creation");
+        }
         const userParams = {
-            email: req.body.user.email,
-            hashedPassword: req.body.user.password
+            email,
+            hashedPassword: password
         };
         //first create the user
         sequelize.transaction((t) => {
@@ -155,9 +167,7 @@ module.exports = (User, passport, helpers, app, sequelize) => {
                 // })
                 .then((result) => {
                     user = result;
-                    req.login(user, err => {
-                        return err ? next(err) : res.redirect('/');
-                    });
+                    res.status(201).json(user);
                 })
                 .catch(next);
         });

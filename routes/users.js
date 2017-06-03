@@ -13,24 +13,19 @@ module.exports = (User, sequelize, BloodSugarRecord, Profile, helpers) => {
     router.get('/stats', (req, res, next) => {
         //We want to get all the medical info
         //Only have bloodsugars for now
-        // BSR.getAllBloodSugarForUser(req.user.id)
-        // .then(bloodSugars => {
-        //     console.log("all bloodSugars", bloodSugars);
-        //     res.end("We got em!");
-        // });
         let bloodSugarInfo = [];
         bloodSugarInfo.push(BSR.getLastFiftyBloodSugarForUser(req.user.id));
         bloodSugarInfo.push(BSR.getBloodSugarInLast24Hours(req.user.id));
         bloodSugarInfo.push(BSR.getAverageBloodSugarInLast24Hours(req.user.id));
         Promise.all(bloodSugarInfo)
             .then(([lastFiftyBloodSugar, TwentyFourHourBloodSugar, TwentyFourHourAvg]) => {
-                let infoObj = {
+                let data = {
                     lastFiftyBloodSugar,
                     TwentyFourHourAvg,
                     TwentyFourHourBloodSugar
                 };
-                res.render('users/stats', {
-                    infoObj
+                res.status(200).json({
+                    data
                 });
             })
             .catch(next);

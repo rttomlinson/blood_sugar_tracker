@@ -2,7 +2,8 @@
 module.exports = function(sequelize, DataTypes) {
   var Dose = sequelize.define('Dose', {
     doseOrder: DataTypes.INTEGER,
-    recommendedAdministration: DataTypes.INTEGER
+    recommendedAdministration: DataTypes.INTEGER,
+    vaccineId: DataTypes.INTEGER
   }, {
     classMethods: {
       associate: function(models) {

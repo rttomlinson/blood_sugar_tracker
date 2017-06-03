@@ -14,6 +14,9 @@ module.exports = {
       recommendedAdministration: {
         type: Sequelize.INTEGER
       },
+      doseId: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

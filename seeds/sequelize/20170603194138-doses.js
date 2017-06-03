@@ -2,7 +2,7 @@
 const models = require('../../models/sequelize');
 
 module.exports = {
-  up: function (queryInterface, Sequelize) {
+  up: function(queryInterface, Sequelize) {
     /*
       Add altering commands here.
       Return a promise to correctly handle asynchronicity.
@@ -13,9 +13,42 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
+    let doses = [];
+    let dose1 = {
+      doseOrder: 1,
+      recommendedAdministration: 8,
+      vaccineId: 1
+    };
+    doses.push(dose1);
+    let dose2 = {
+      doseOrder: 2,
+      recommendedAdministration: 16,
+      vaccineId: 1
+    };
+    doses.push(dose2);
+    let dose3 = {
+      doseOrder: 3,
+      recommendedAdministration: 24,
+      vaccineId: 1
+    };
+    doses.push(dose3);
+    let dose4 = {
+      doseOrder: 4,
+      recommendedAdministration: 60,
+      vaccineId: 1
+    };
+    doses.push(dose4);
+    let dose5 = {
+      doseOrder: 5,
+      recommendedAdministration: 204,
+      vaccineId: 1
+    };
+    doses.push(dose5);
+
+    return queryInterface.bulkInsert("Doses", doses, {});
   },
 
-  down: function (queryInterface, Sequelize) {
+  down: function(queryInterface, Sequelize) {
     /*
       Add reverting commands here.
       Return a promise to correctly handle asynchronicity.

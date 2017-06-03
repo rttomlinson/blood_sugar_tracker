@@ -9,9 +9,9 @@ User-----------------------
 * 
 
 Profile-------------------------
-* weight
-* height
-* age
+* weight (In kg)
+* height (In cm)
+* age (In years)
 * user_id
 * 
 
@@ -23,8 +23,11 @@ Vaccine------------------------
 * 
 
 Dose-------------------------
-* doseOrder
-* recommendedAdministration
+* doseOrder (Starts with 1)
+* recommendedAdministration (In weeks)
+* vaccineId (Though multiple vaccines can have the same dosing pattern for a given doseOrder. Given the complexity
+of a single vaccine and the slow growth rate of vaccine development it would be advisable to create a new dose instance
+for every dose of a given vaccine rather than a dose for each given type and then assigning the doses to the vaccines)
 * 
 
 

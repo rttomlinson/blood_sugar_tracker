@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 
-module.exports = (User, sequelize, BloodSugarRecord, Profile, helpers) => {
+module.exports = (User, sequelize, BloodSugarRecord, Profile, UserDose, Dose, helpers) => {
     const BSR = BloodSugarRecord;
     const h = helpers.registered;
 
@@ -85,5 +85,23 @@ module.exports = (User, sequelize, BloodSugarRecord, Profile, helpers) => {
             })
             .catch(next);
     });
+    
+    router.get('/vaccines', (req, res, next) => {
+        let userId = req.user.id;
+        UserDose.findAll({
+            where: {
+                userId
+            },
+            include: [{
+                model: Dose
+            }]
+        })
+        .then(doses =>{
+            console.log("doses", doses);
+            res.status(200).json({userVaccines: doses});
+        });
+    });
+    
+    
     return router;
 };

@@ -13,6 +13,12 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
+    return models.Vaccine.create({
+      description: "Diphtheria, tetanus toxoids, and whole cell pertussis vaccine (DTP), for intramuscular use",
+      CPTCode: 90701,
+      CVXCode: 1,
+      name: "DTP"
+    });
   },
 
   down: function (queryInterface, Sequelize) {

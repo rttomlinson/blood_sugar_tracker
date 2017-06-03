@@ -14,10 +14,10 @@ wagner.factory("helpers", function() {
     return helpers;
 });
 
-require("./models/sequelize/")(wagner);
-//get passport
-require("./services/passport")(wagner);
-
+//Add models and sequelize to wagner
+require('./dependencies/sequelize')(wagner);
+//Add passport
+require('./dependencies/passport')(wagner);
 
 // ----------------------------------------
 // Body Parser

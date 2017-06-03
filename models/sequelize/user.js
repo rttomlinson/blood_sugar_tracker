@@ -19,17 +19,6 @@ module.exports = function(sequelize, DataTypes) {
         });
         
         //Doses
-        User.hasMany(models.UserDose, {
-          foreignKey: "userId"
-        });
-        User.belongsToMany(models.Dose, {
-          through: models.UserDose,
-          foreignKey: "userId",
-          otherKey: "doseId"
-        });
-        
-        
-
       },
       findByToken: function(token) {
         return User.findOne({

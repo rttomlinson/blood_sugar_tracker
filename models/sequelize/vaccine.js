@@ -12,8 +12,6 @@ module.exports = function(sequelize, DataTypes) {
         Vaccine.hasMany(models.VaccineDose, {
           foreignKey: "vaccineId"
         });
-        
-        
         Vaccine.belongsTo(models.Dose, {
           through: models.VaccineDose,
           foreignKey: "vaccineId",

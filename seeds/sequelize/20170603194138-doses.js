@@ -17,31 +17,26 @@ module.exports = {
     let dose1 = {
       doseOrder: 1,
       recommendedAdministration: 8,
-      vaccineId: 1
     };
     doses.push(dose1);
     let dose2 = {
       doseOrder: 2,
       recommendedAdministration: 16,
-      vaccineId: 1
     };
     doses.push(dose2);
     let dose3 = {
       doseOrder: 3,
       recommendedAdministration: 24,
-      vaccineId: 1
     };
     doses.push(dose3);
     let dose4 = {
       doseOrder: 4,
       recommendedAdministration: 60,
-      vaccineId: 1
     };
     doses.push(dose4);
     let dose5 = {
       doseOrder: 5,
       recommendedAdministration: 204,
-      vaccineId: 1
     };
     doses.push(dose5);
 

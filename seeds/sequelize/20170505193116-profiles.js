@@ -17,7 +17,7 @@ module.exports = {
             age: 50,
             weight: 120.4,
             height: 170,
-            user_id: 1
+            userId: 1
         });
     },
 

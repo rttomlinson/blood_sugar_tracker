@@ -6,16 +6,16 @@ module.exports = function(sequelize, DataTypes) {
     email: DataTypes.STRING,
     hashedPassword: DataTypes.STRING,
     token: DataTypes.STRING,
-    profile_id: DataTypes.INTEGER
+    profileId: DataTypes.INTEGER
   }, {
     classMethods: {
       associate: function(models) {
         // associations can be defined here
         User.hasMany(models.BloodSugarRecord, {
-          foreignKey: "user_id"
+          foreignKey: "userId"
         });
         User.hasOne(models.Profile, {
-          foreignKey: "user_id"
+          foreignKey: "userId"
         });
 
       },

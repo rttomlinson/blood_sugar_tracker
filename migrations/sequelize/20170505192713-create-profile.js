@@ -17,7 +17,7 @@ module.exports = {
       age: {
         type: Sequelize.INTEGER
       },
-      user_id: {
+      userId: {
         type: Sequelize.INTEGER
       },
       createdAt: {

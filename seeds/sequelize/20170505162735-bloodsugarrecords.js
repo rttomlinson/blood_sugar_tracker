@@ -18,8 +18,8 @@ module.exports = {
         for (let i = 0; i < 100; i++) {
             let randomTime = Math.floor(Date.now() - (Math.random() * 10000000000));
             let bloodSugar = {
-                user_id: 1,
-                blood_sugar: Math.floor(Math.random() * 500),
+                userId: 1,
+                bloodSugar: Math.floor(Math.random() * 500),
                 time: new Date(randomTime)
             };
             bloodSugars.push(bloodSugar);
@@ -27,8 +27,8 @@ module.exports = {
         // handful of recent times
         for (let i = 0; i < 20; i++) {
             let bloodSugar = {
-                user_id: 1,
-                blood_sugar: Math.floor(Math.random() * 500),
+                userId: 1,
+                bloodSugar: Math.floor(Math.random() * 500),
                 time: new Date()
             };
             bloodSugars.push(bloodSugar);

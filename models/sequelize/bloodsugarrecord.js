@@ -1,8 +1,8 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var BloodSugarRecord = sequelize.define('BloodSugarRecord', {
-    user_id: DataTypes.INTEGER,
-    blood_sugar: DataTypes.INTEGER,
+    userId: DataTypes.INTEGER,
+    bloodSugar: DataTypes.INTEGER,
     time: {
         type: DataTypes.DATE
   }}, {
@@ -10,32 +10,32 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         // associations can be defined here
         BloodSugarRecord.belongsTo(models.User, {
-            foreignKey: "user_id"
+            foreignKey: "userId"
         });
       },
       getAllBloodSugarForUser: function(id) {
           return BloodSugarRecord.findAll({
-              where: { user_id: id },
+              where: { userId: id },
               raw: true
           });
       },
       getLastFiftyBloodSugarForUser: function(id) {
           return BloodSugarRecord.findAll({
-              where: { user_id: id },
+              where: { userId: id },
               limit: 50,
               raw: true
           });
       },
       getBloodSugarInLast24Hours: function(id) {
           return BloodSugarRecord.findAll({
-              where: { user_id: id,
+              where: { userId: id,
                         time: { $gt: Date.now() - 86400000 }},
               raw: true
           });
       },
       getAverageBloodSugarInLast24Hours: function(id) {
           return BloodSugarRecord.aggregate("blood_sugar", "AVG", {
-              where: { user_id: id,
+              where: { userId: id,
                         time: { $gt: Date.now() - 86400000 }},
               raw: true
           });

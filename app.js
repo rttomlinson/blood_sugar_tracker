@@ -72,21 +72,6 @@ app.use(express.static(`${ __dirname }/public`));
 
 
 // ----------------------------------------
-// Template Engine
-// ----------------------------------------
-// const expressHandlebars = require('express-handlebars');
-
-// const hbs = expressHandlebars.create({
-//     helpers: helpers.registered,
-//     partialsDir: 'views/',
-//     defaultLayout: 'main'
-// });
-
-
-// app.engine('handlebars', hbs.engine);
-// app.set('view engine', 'handlebars');
-
-// ----------------------------------------
 // Method Override
 // ----------------------------------------
 app.use((req, res, next) => {
@@ -149,9 +134,12 @@ app.delete('/logout', onDestroy);
 // ----------------------------------------
 // Server
 // ----------------------------------------
-const port = 8081 || process.env.PORT ||
-    process.argv[2] ||
-    3000;
+let port;
+if (process.env.NODE_ENV !== 'production' || process.env.NODE_ENV !== 'test') {
+    port = 8081;
+} else {
+    port = process.env.PORT || 8080;
+}
 const host = 'localhost';
 
 

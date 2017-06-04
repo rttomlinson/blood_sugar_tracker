@@ -29,15 +29,12 @@ class App extends Component {
   
   componentDidMount(){
     //check for token in localStorage
+    console.log("app should mount");
     let token = localStorage.getItem("token");
     if (token && !this.props.auth.isAuthenticated) {
       this.props.authUser();
     }
   }
-  
-  
-  
-  
   render() {
     return (
       <Router>
@@ -73,6 +70,4 @@ function mapDispatchToProps(dispatch) {
     }
   };
 }
-
-
 export default connect(mapStateToProps, mapDispatchToProps)(App);

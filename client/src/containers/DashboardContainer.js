@@ -9,15 +9,14 @@ import {
 } from '../actions';
 import DashboardHeader from '../components/dashboard/DashboardHeader';
 import DashboardBody from '../components/dashboard/DashboardBody';
-                // <DashboardHeader {...this.props}/>
-                // <DashboardBody {...this.props}/>
+                
 class DashboardContainer extends React.Component {
     
     render() {
-        console.log("Trying to render");
         return (
             <div>
-                Dashboard Placeholder
+                <DashboardHeader {...this.props}/>
+                <DashboardBody {...this.props}/>
             </div>
         );
     }
@@ -25,8 +24,7 @@ class DashboardContainer extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        ...state,
-        token: state.auth.token
+        ...state
     };
 }
 function mapDispatchToProps(dispatch) {

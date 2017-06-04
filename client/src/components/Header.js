@@ -1,29 +1,46 @@
 import React from 'react';
 import {
-    connect
+  connect
 }
 from 'react-redux';
-import { NavLink } from 'react-router-dom';
-import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem } from 'reactstrap';
+import {
+  NavLink
+}
+from 'react-router-dom';
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem
+}
+from 'reactstrap';
+import {
+  clearTokenAndUnauth
+}
+from '../actions/';
 
+const loggedIn = (onClick) => {
+  return (
+    <Nav className="ml-auto" navbar>
+      <NavItem>
+        <NavLink onClick={onClick} className="header-nav-item" to="/login">Logout</NavLink>
+      </NavItem>
+    </Nav>
+)};
 
-    // const loggedIn = () => {
-    //     return (
-    //     <ul className="nav navbar-nav navbar-right">
-    //         <li><a href="{{ statsPath }}">Stats</a></li>
-    //         <li><a href="{{ profilePath }}">Profile</a></li>
-    //         <li><a href="{{ logoutPath }}">Logout</a></li>
-    //     </ul>
-    //     );
-    // };
-    // const notLoggedIn = () => {
-    //     return (
-    //     <ul className="nav navbar-nav navbar-right">
-    //         <li><a href="{{ loginPath }}">Login</a></li>
-    //         <li><a href="{{ newUserPath }}">Register</a></li> 
-    //     </ul>
-    //     );
-    // };
+const notLoggedIn = (
+  <Nav className="ml-auto" navbar>
+    <NavItem>
+      <NavLink className="header-nav-item" to="/login">Login</NavLink>
+    </NavItem>
+    <NavItem>
+      <NavLink className="header-nav-item" to="/register">Register</NavLink>
+    </NavItem>
+  </Nav>
+);
+
 
 class Header extends React.Component {
   constructor(props) {
@@ -39,19 +56,20 @@ class Header extends React.Component {
     });
   }
   render() {
+    const {
+      isAuthenticated,
+      clearTokenAndUnauth
+    } = this.props;
+    let navButtons = isAuthenticated ? loggedIn(clearTokenAndUnauth) : notLoggedIn;
+
+
+
     return (
-        <Navbar color="faded" light toggleable>
+      <Navbar color="faded" light toggleable>
           <NavbarToggler right onClick={this.toggle} />
           <NavLink className="navbar-brand" to="dashboard">Blood Glucose Tracker</NavLink>
           <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink className="header-nav-item" to="/login">Login</NavLink>
-              </NavItem>
-            <NavItem>
-                <NavLink className="header-nav-item" to="/register">Register</NavLink>
-              </NavItem>
-            </Nav>
+            {navButtons}
           </Collapse>
         </Navbar>
     );
@@ -59,7 +77,18 @@ class Header extends React.Component {
 }
 
 function mapStateToProps(state) {
-    return state;
+  return {
+    isAuthenticated: state.auth.isAuthenticated
+  };
 }
 
-export default connect(mapStateToProps)(Header);
+function mapDispatchToProps(dispatch) {
+  return {
+    clearTokenAndUnauth: () => {
+      dispatch(clearTokenAndUnauth());
+    }
+  };
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

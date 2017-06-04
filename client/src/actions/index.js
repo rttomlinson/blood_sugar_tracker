@@ -115,6 +115,13 @@ export function loginUser({
 }
 
 
+export function clearTokenAndUnauth() {
+    return function(dispatch) {
+        localStorage.removeItem('token');
+        dispatch(unauthUser());
+    }
+}
+
 
 //--------------------------
 //Async Server Call - registerUser -- auth: state modifier

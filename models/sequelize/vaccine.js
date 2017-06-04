@@ -10,6 +10,7 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         // associations can be defined here
         
+        //Vaccine Dose Relationship
         Vaccine.belongsToMany(models.Dose, {
           through: models.VaccineDose,
           foreignKey: "vaccineId",

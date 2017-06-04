@@ -18,7 +18,15 @@ module.exports = function(sequelize, DataTypes) {
           foreignKey: "userId"
         });
         
-        //Doses
+        //UserVaccineDose relationship
+        User.hasMany(models.UserVaccineDose, {
+          foreignKey: "userId"
+        });
+        User.belongsToMany(models.VaccineDose, {
+          through: models.UserVaccineDose,
+          foreignKey: "userId",
+          otherKey: "vaccindDoseId"
+        });
       },
       findByToken: function(token) {
         return User.findOne({

@@ -13,6 +13,16 @@ module.exports = function(sequelize, DataTypes) {
         VaccineDose.belongsTo(models.Dose, {
           foreignKey: "doseId"
         });
+        
+        //UserVaccineDose relationship
+        VaccineDose.hasMany(models.UserVaccineDose, {
+          foreignKey: "vaccineDoseId"
+        });
+        VaccineDose.belongsToMany(models.User, {
+          through: models.UserVaccineDose,
+          foreignKey: "vaccineDoseId",
+          otherKey: "userId"
+        });
       }
     }
   });

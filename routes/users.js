@@ -88,25 +88,29 @@ module.exports = (User, sequelize, BloodSugarRecord, Profile, Dose, helpers, Vac
 
     router.get('/vaccines', (req, res, next) => {
         let userId = req.user.id;
+        //make sure userId is an int to prevent an sql injection attack
+        //but they would have tampered with the token in that case...
+        //it is not necessary to check userId in this case
+
+
         UserVaccineDose.findAll({
-                where: {
-                    userId
-                },
+            where: {
+                userId
+            },
+            include: [{
+                model: VaccineDose,
                 include: [{
-                    model: VaccineDose,
-                    include: [{
-                        model: Vaccine
-                    },
-                    {
-                        model: Dose
-                    }]
+                    model: Vaccine
+                }, {
+                    model: Dose
                 }]
-            })
-            .then(doses => {
-                res.status(200).json({
-                    userVaccines: doses
-                });
+            }]
+        })
+        .then(doses => {
+            res.status(200).json({
+                userVaccines: doses
             });
+        });
     });
 
 

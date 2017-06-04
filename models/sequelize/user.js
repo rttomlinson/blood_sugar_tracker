@@ -25,7 +25,7 @@ module.exports = function(sequelize, DataTypes) {
         User.belongsToMany(models.VaccineDose, {
           through: models.UserVaccineDose,
           foreignKey: "userId",
-          otherKey: "vaccindDoseId"
+          otherKey: "vaccineDoseId"
         });
       },
       findByToken: function(token) {

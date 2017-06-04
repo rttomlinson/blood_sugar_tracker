@@ -1,6 +1,11 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var UserVaccineDose = sequelize.define('UserVaccineDose', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
     userId: DataTypes.INTEGER,
     vaccineDoseId: DataTypes.INTEGER,
     completed: DataTypes.BOOLEAN
@@ -12,7 +17,8 @@ module.exports = function(sequelize, DataTypes) {
           foreignKey: "userId"
         });
         UserVaccineDose.belongsTo(models.VaccineDose, {
-          foreignKey: "vaccineDoseId"
+          foreignKey: "vaccineDoseId",
+          targetKey: "id"
         });
       }
     }

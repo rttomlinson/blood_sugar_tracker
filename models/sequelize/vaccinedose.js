@@ -1,6 +1,11 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var VaccineDose = sequelize.define('VaccineDose', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
     vaccineId: DataTypes.INTEGER,
     doseId: DataTypes.INTEGER
   }, {
@@ -13,10 +18,11 @@ module.exports = function(sequelize, DataTypes) {
         VaccineDose.belongsTo(models.Dose, {
           foreignKey: "doseId"
         });
-        
+
         //UserVaccineDose relationship
         VaccineDose.hasMany(models.UserVaccineDose, {
-          foreignKey: "vaccineDoseId"
+          foreignKey: "vaccineDoseId",
+          sourceKey: "id"
         });
         VaccineDose.belongsToMany(models.User, {
           through: models.UserVaccineDose,

@@ -9,15 +9,15 @@ import {
 } from '../actions';
 import DashboardHeader from '../components/dashboard/DashboardHeader';
 import DashboardBody from '../components/dashboard/DashboardBody';
-
+                // <DashboardHeader {...this.props}/>
+                // <DashboardBody {...this.props}/>
 class DashboardContainer extends React.Component {
-    // componentDidMount() {
-    // }
+    
     render() {
+        console.log("Trying to render");
         return (
             <div>
-                <DashboardHeader {...this.props}/>
-                <DashboardBody {...this.props}/>
+                Dashboard Placeholder
             </div>
         );
     }

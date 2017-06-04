@@ -18,8 +18,10 @@ const Routes = (
         <Route exact path="/" component={HomePage} />
         <Route path='/login' component={LoginContainer} />
         <Route path='/register' component={RegisterContainer} />
-        <Route path='/dashboard' component={RequireAuth(DashboardContainer)} />
-        <Route path='*' component={NotFoundPage} />
+        <RequireAuth>
+            <Route path='/dashboard' component={DashboardContainer} />
+            <Route path='*' component={NotFoundPage} />
+        </RequireAuth>
     </Switch>
 );
 

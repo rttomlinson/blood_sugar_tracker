@@ -6,29 +6,28 @@ import {
 from 'react-redux';
 import {
   createStore,
-  applyMiddleware
+  applyMiddleware,
+  compose
 }
 from 'redux';
-import {
-  BrowserRouter as Router
-}
-from 'react-router-dom';
 import App from './components/App';
-import routes from './routes';
 import reducers from './reducers';
 import thunk from 'redux-thunk';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
 
-const store = createStore(reducers, applyMiddleware(thunk));
+let createStoreEnhancers;
+if (process.env.NODE_ENV === 'production') {
+    createStoreEnhancers = applyMiddleware(thunk);
+}
+else {
+    createStoreEnhancers = compose(applyMiddleware(thunk), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+}
+
+
+const store = createStore(reducers, createStoreEnhancers);
 
 ReactDOM.render(
-  <Provider store={store}>
-    <Router>
-      <App>
-        {routes}
-      </App>
-    </Router>
-  </Provider>,
-  document.getElementById('root')
-);
+    <Provider store={store}>
+        <App />
+    </Provider>, document.getElementById('root'));

@@ -6,47 +6,38 @@ import {
     connect
 }
 from 'react-redux';
+import {withRouter} from 'react-router-dom';
 
-const RequireAuth = (ComposedComponent) => {
-    class Authentication extends Component {
-        componentDidMount() {
-            const {
-                // dispatch,
-                // currentURL,
-                history,
-                isAuthenticated
-            } = this.props;
-            if (!isAuthenticated) {
-                //set the current url for future redirection
-                //dispatch(setRedirectUrl(currentUrl)
-                history.replace('/login');
-            }
-        }
-        componentDidUpdate() {
-            const {
-                // dispatch,
-                // currentURL,
-                history,
-                isAuthenticated
-            } = this.props;
-            if (!isAuthenticated) {
-                //set the current url for future redirection
-                //dispatch(setRedirectUrl(currentUrl)
-                history.replace('/login');
-            }
-        }
-        render() {
-            return (
-                <ComposedComponent {...this.props} />
-            );
+class RequireAuth extends Component {
+    
+    componentWillMount(){
+        const {
+            history,
+            isAuthenticated,
+        } = this.props;
+        if (!isAuthenticated) {
+            //set the current url for future redirection
+            //dispatch(setRedirectUrl(currentUrl)
+            history.replace('/login');
         }
     }
-
-    function mapStateToProps(state) {
-        return {
-            isAuthenticated: state.auth.isAuthenticated
-        };
+    
+    render() {
+        console.log("inside require Auth");
+        const {children} = this.props;
+        return (
+            {children}
+        );
     }
-    return connect(mapStateToProps)(Authentication);
-};
-export default RequireAuth;
+}
+
+function mapStateToProps(state) {
+    return {
+        isAuthenticated: state.auth.isAuthenticated
+    };
+}
+
+
+
+
+export default withRouter(connect(mapStateToProps)(RequireAuth));

@@ -22,10 +22,9 @@ export function requestToServer() {
     };
 }
 
-export function authUser(data) {
+export function authUser() {
     return {
-        type: AUTH_USER,
-        data
+        type: AUTH_USER
     };
 }
 
@@ -75,7 +74,7 @@ export function infoError(error) {
 export function loginUser({
     email,
     password
-}, history) {
+}) {
     return (dispatch) => {
         //attempt to auth user on api server
         dispatch(requestToServer());
@@ -99,18 +98,18 @@ export function loginUser({
             .then(json => {
                 console.log('parsed response from server', json);
                 console.log("should dispatch action to update user");
-                dispatch(authUser(json)); //isAuthenticated gets set to true in the auth state
+                dispatch(authUser()); //isAuthenticated gets set to true in the auth state
                 
                 //save token in localStorage
                 localStorage.setItem("token", json.token);
 
                 //route them to the dashboard
-                history.push('dashboard');
+                window.location = '/dashboard';
             })
             .catch(err => {
                 console.error("Error handler should dispatch error");
                 dispatch(authError(err)); //isAuthenticated gets set to true in the auth state
-                history.push('login');
+                window.location = '/login';
             });
     };
 }

@@ -30,7 +30,7 @@ class App extends Component {
   componentDidMount(){
     //check for token in localStorage
     let token = localStorage.getItem("token");
-    if (token) {
+    if (token && !this.props.auth.isAuthenticated) {
       this.props.authUser();
     }
   }
@@ -48,8 +48,10 @@ class App extends Component {
               <Route path='/login' component={LoginContainer} />
               <Route path='/register' component={RegisterContainer} />
               <RequireAuth>
-                  <Route path='/dashboard' component={DashboardContainer} />
-                  <Route path='*' component={NotFoundPage} />
+                  <Switch>
+                    <Route path='/dashboard' component={DashboardContainer} />
+                    <Route path='*' component={NotFoundPage} />
+                  </Switch>
               </RequireAuth>
               </Switch>
           </div>
@@ -58,6 +60,11 @@ class App extends Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  return state;
+}
+
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -68,4 +75,4 @@ function mapDispatchToProps(dispatch) {
 }
 
 
-export default connect(null, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

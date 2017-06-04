@@ -2,8 +2,7 @@ import {
     AUTH_USER,
     AUTH_ERROR,
     UNAUTH_USER,
-    REQUEST_TO_SERVER,
-    ADD_TOKEN
+    REQUEST_TO_SERVER
 }
 from '../actions/types';
 
@@ -20,14 +19,13 @@ function userAuth(state = INITIAL_AUTH_STATE, action) {
             return {
                 ...state,
                 isFetching: true,
+                error: null
             };
         case AUTH_USER:
             return {
                 ...state,
                 isFetching: false,
-                isAuthenticated: true,
-                error: null,
-                token: action.data.token
+                isAuthenticated: true
             };
         case UNAUTH_USER:
             return {
@@ -39,11 +37,6 @@ function userAuth(state = INITIAL_AUTH_STATE, action) {
                 ...state,
                 error: "Error occurred during authorization",
                 isFetching: false
-            };
-        case ADD_TOKEN:
-            return {
-                ...state,
-                token: action.data
             };
         default:
             return state;

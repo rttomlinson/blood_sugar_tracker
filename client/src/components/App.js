@@ -9,7 +9,7 @@ import {
     Switch
 }
 from 'react-router-dom';
-
+import {connect} from 'react-redux';
 import NotFoundPage from '../components/pages/NotFoundPage';
 import HomePage from '../components/pages/HomePage';
 import LoginContainer from '../containers/LoginContainer';
@@ -20,11 +20,24 @@ import {
 from 'react-router-dom';
 import DashboardContainer from '../containers/DashboardContainer';
 import RequireAuth from '../components/auth/RequireAuth';
+import {authUser} from '../actions/index';
 // import Footer from './Footer';
 // <Footer />
 
 
 class App extends Component {
+  
+  componentDidMount(){
+    //check for token in localStorage
+    let token = localStorage.getItem("token");
+    if (token) {
+      this.props.authUser();
+    }
+  }
+  
+  
+  
+  
   render() {
     return (
       <Router>
@@ -46,4 +59,13 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapDispatchToProps(dispatch) {
+  return {
+    authUser : () => {
+      dispatch(authUser());
+    }
+  };
+}
+
+
+export default connect(null, mapDispatchToProps)(App);

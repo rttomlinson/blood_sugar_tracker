@@ -9,7 +9,6 @@ import {
     REQUEST_TO_SERVER,
     GET_PROFILE,
     GET_STATS,
-    ADD_TOKEN,
     GET_INFO_ERROR
 }
 from './types';
@@ -37,10 +36,9 @@ export function authError(data) {
     };
 }
 
-export function unauthUser(data) {
+export function unauthUser() {
     return {
-        type: UNAUTH_USER,
-        data
+        type: UNAUTH_USER
     };
 }
 
@@ -65,12 +63,6 @@ export function infoError(error) {
     };
 }
 
-export function addToken(data) {
-    return {
-        type: ADD_TOKEN,
-        data
-    };
-}
 
 
 
@@ -101,7 +93,7 @@ export function loginUser({
             headers: myHeaders
 
         };
-        fetch(`${apiConfig.apiServerBaseUrl}/login`, loginOptions)
+        return fetch(`${apiConfig.apiServerBaseUrl}/login`, loginOptions)
             .then(fetchHelpers.checkResponse)
             .then(fetchHelpers.parseJSON)
             .then(json => {
@@ -109,9 +101,9 @@ export function loginUser({
                 console.log("should dispatch action to update user");
                 dispatch(authUser(json)); //isAuthenticated gets set to true in the auth state
                 
-                //would it be okay to dispatch an action to load the dashboard here since we have the token?
-                dispatch(addToken(json.token));
-                
+                //save token in localStorage
+                localStorage.setItem("token", json.token);
+
                 //route them to the dashboard
                 history.push('dashboard');
             })
@@ -151,7 +143,7 @@ export function registerUser({
             headers: myHeaders
 
         };
-        fetch(`${apiConfig.apiServerBaseUrl}/user/new`, loginOptions)
+        return fetch(`${apiConfig.apiServerBaseUrl}/user/new`, loginOptions)
             .then(fetchHelpers.checkResponse)
             .then(fetchHelpers.parseJSON)
             .then(json => {
@@ -159,6 +151,8 @@ export function registerUser({
                 console.log("should dispatch action to update state user");
                 dispatch(authUser(json)); //isAuthenticated gets set to true in the auth state
                 //route them to the dashboard
+                localStorage.setItem("token", json.token);
+                
                 history.push('dashboard');
             })
             .catch(err => {
@@ -185,7 +179,7 @@ export function fetchUserStats(
         dispatch(requestToServer());
         //send info to server and expect to get json
         //make qs of token
-        fetch(`${apiConfig.apiServerBaseUrl}/api/user/stats?${qs.stringify({token})}`)
+        return fetch(`${apiConfig.apiServerBaseUrl}/api/user/stats?${qs.stringify({token})}`)
             .then(fetchHelpers.checkResponse)
             .then(fetchHelpers.parseJSON)
             .then(json => {

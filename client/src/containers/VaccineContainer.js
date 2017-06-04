@@ -6,12 +6,14 @@ import {
 from 'react-redux';
 import DashboardHeader from '../components/dashboard/DashboardHeader';
 import DashboardBody from '../components/dashboard/DashboardBody';
-
+import DashboardContainer  from './DashboardContainer';
 
 
 class VaccineContainer extends React.Component {
     
     render() {
+        const userVaccines = this.props.userVaccines;
+        console.log(userVaccines);
         return (
             <div>
                 Vaccines here
@@ -22,18 +24,17 @@ class VaccineContainer extends React.Component {
 
 
 function mapStateToProps(state) {
-    return state;
+    return {
+        userVaccines: state.userVaccines.data
+    };
 }
 
 
 const WrappedVaccineContainer = () => {
     return (
-        <div>
-            <DashboardHeader />
-            <DashboardBody>
-                <WiredVaccineContainer />
-            </DashboardBody>
-        </div>
+        <DashboardContainer>
+            <WiredVaccineContainer />
+        </DashboardContainer>
     );
 };
 

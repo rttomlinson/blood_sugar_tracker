@@ -20,7 +20,8 @@
     "deep-freeze": "0.0.1",
     "jasmine-es6": "^0.4.0",
     "nodemon": "^1.11.0",
-    "react-scripts": "^1.0.5"
+    "react-scripts": "^1.0.5",
+    "redux-mock-store": "^1.2.3"
   },
   "scripts": {
     "start": "react-scripts start",

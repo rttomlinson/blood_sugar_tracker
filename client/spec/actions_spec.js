@@ -14,26 +14,6 @@ const {
     REQUEST_TO_SERVER
 } = require('../src/actions/types');
 //auth Reducer actions
-const {
-    ADD_TOKEN
-} = require('../src/actions/types');
-describe("auth reducer", function() {
-    it("adds the token to the auth object", function() {
-        const initialState = {};
-        const action = {
-            type: ADD_TOKEN,
-            data: "token"
-        };
-        const finalState = {
-            token: "token"
-        }
-        deepFreeze(initialState);
-        deepFreeze(action);
-        expect(authReducer(initialState, action)).toEqual(finalState);
-    });
-});
-
-
 
 describe("info reducer", function() {
     let initialState;

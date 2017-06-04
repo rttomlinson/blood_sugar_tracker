@@ -7,10 +7,17 @@ from 'react-redux';
 import {
     fetchUserStats
 } from '../actions';
+import { fetchVaccineData } from '../actions/uservaccines';
 import DashboardHeader from '../components/dashboard/DashboardHeader';
 import DashboardBody from '../components/dashboard/DashboardBody';
                 
 class DashboardContainer extends React.Component {
+    
+    componentDidMount(){
+        console.log("dashboard container should mount");
+        this.props.fetchVaccineData();
+    }
+    
     
     render() {
         return (
@@ -31,6 +38,9 @@ function mapDispatchToProps(dispatch) {
     return {
         fetchStats: (token) => {
             dispatch(fetchUserStats(token));
+        },
+        fetchVaccineData: () => {
+            dispatch(fetchVaccineData());
         }
     };
 }

@@ -22,7 +22,6 @@ class RequireAuth extends Component {
                 
             );
         }
-        console.log("trying to render children");
         return (
             <div>
                 {children}

@@ -18,12 +18,13 @@ import {
   BrowserRouter as Router
 }
 from 'react-router-dom';
-import DashboardContainer from '../containers/DashboardContainer';
+import VaccineContainer from '../containers/VaccineContainer';
 import RequireAuth from '../components/auth/RequireAuth';
 import {authUser} from '../actions/index';
 // import Footer from './Footer';
 // <Footer />
-
+import StatisticsContainer from '../containers/StatisticsContainer';
+import ProfileContainer from '../containers/ProfileContainer';
 
 class App extends Component {
   
@@ -46,7 +47,9 @@ class App extends Component {
               <Route path='/register' component={RegisterContainer} />
               <RequireAuth>
                   <Switch>
-                    <Route path='/dashboard' component={DashboardContainer} />
+                    <Route path={`/dashboard/profile`} component={ProfileContainer} />
+                    <Route path={`/dashboard/statistics`} component={StatisticsContainer} />
+                    <Route path='/dashboard' component={VaccineContainer} />
                     <Route path='*' component={NotFoundPage} />
                   </Switch>
               </RequireAuth>

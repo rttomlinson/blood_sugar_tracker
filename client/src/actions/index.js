@@ -98,11 +98,9 @@ export function loginUser({
             .then(json => {
                 console.log('parsed response from server', json);
                 console.log("should dispatch action to update user");
-                dispatch(authUser()); //isAuthenticated gets set to true in the auth state
-                
                 //save token in localStorage
                 localStorage.setItem("token", json.token);
-
+                dispatch(authUser()); //isAuthenticated gets set to true in the auth state
                 //route them to the dashboard
                 window.location = '/dashboard';
             })

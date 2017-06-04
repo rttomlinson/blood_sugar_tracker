@@ -3,7 +3,8 @@
 var repl = require('repl').start({});
 var models = require('./models/sequelize');
 
-
+//clear context models first;
+repl.context.models = null;
 // Make the `models` object
 // a global variable in the
 // REPL

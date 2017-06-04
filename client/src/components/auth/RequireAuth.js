@@ -10,21 +10,18 @@ import {withRouter} from 'react-router-dom';
 
 class RequireAuth extends Component {
     
-    componentWillMount(){
-        const {
-            history,
-            isAuthenticated,
-        } = this.props;
-        if (!isAuthenticated) {
-            //set the current url for future redirection
-            //dispatch(setRedirectUrl(currentUrl)
-            history.replace('/login');
-        }
-    }
-    
     render() {
-        console.log("inside require Auth");
-        const {children} = this.props;
+        const {children, history, isAuthenticated} = this.props;
+        if (!isAuthenticated) {
+            return (
+                <div>
+                    <p>Doesn't look like you're logged in yet. We'll take you automatically in 15 seconds.</p>
+                    <button onClick={() => console.log("redirect to /login")}>Click here to go right now</button>
+                    <button onClick={() => console.log("canceling redirect")}>Click here to stay here</button>
+                </div>
+                
+            );
+        }
         return (
             {children}
         );

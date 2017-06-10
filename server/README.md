@@ -5,14 +5,14 @@ User-----------------------
 * email
 * token
 * hashedPassword
-* profile_id
+* profileId
 * 
 
 Profile-------------------------
 * weight (In kg)
 * height (In cm)
 * age (In years)
-* user_id
+* userId
 * 
 
 Vaccine------------------------
@@ -20,7 +20,7 @@ Vaccine------------------------
 * CPTCode
 * CVXCode
 * description
-* 
+A vaccine have many vaccinedoses and belong to many doses through vaccine dose
 
 Dose-------------------------
 * doseOrder (Starts with 1)
@@ -28,12 +28,21 @@ Dose-------------------------
 * vaccineId (Though multiple vaccines can have the same dosing pattern for a given doseOrder. Given the complexity
 of a single vaccine and the slow growth rate of vaccine development it would be advisable to create a new dose instance
 for every dose of a given vaccine rather than a dose for each given type and then assigning the doses to the vaccines)
-* 
+A dose will have many vaccine doses and belong to many vaccines through vaccine dose
 
-UserDose---------------------
+VaccineDose-------
+* vaccineId
+* doseId
+Each vaccine dose will belong to one dose and one vaccine
+Will have many uservaccinedoses associated
+Will 
+
+UserVaccineDose---------------------
 * completed - Has the user been administered this dose
 * userId
-* doseId
+* vaccindDoseId
+* UVD will belong to a user and a vaccineDose 
+
 
 //////////Repl checks
 
@@ -51,14 +60,17 @@ User.findAll({
 }).then(lg);
 
 
+Server Architecture
+
+
+
+
 
 
 
 # Track my Vaccines
 
 Renzo Tomlinson
-
-Hackaton End of Week 6. GET CRAZY CODING!
 
 **IMPORTANT: Modify this file to add description to how we will start/use your app.**
 

@@ -92,7 +92,7 @@ export function loginUser({
             headers: myHeaders
 
         };
-        return fetch(`${apiConfig.apiServerBaseUrl}/login`, loginOptions)
+        return fetch(`${apiConfig.apiServerBaseUrl}${apiConfig.loginPath}`, loginOptions)
             .then(fetchHelpers.checkResponse)
             .then(fetchHelpers.parseJSON)
             .then(json => {
@@ -147,7 +147,7 @@ export function registerUser({
             headers: myHeaders
 
         };
-        return fetch(`${apiConfig.apiServerBaseUrl}/user/new`, loginOptions)
+        return fetch(`${apiConfig.apiServerBaseUrl}${apiConfig.registerPath}`, loginOptions)
             .then(fetchHelpers.checkResponse)
             .then(fetchHelpers.parseJSON)
             .then(json => {

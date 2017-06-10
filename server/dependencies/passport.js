@@ -2,7 +2,7 @@
 //use passport module
 let passport = require("passport");
 let LocalStrategy = require('passport-local').Strategy;
-//JWT
+//JWT **Basic set up but not in use. Tests not available**
 const passportJWT = require('password-jwt');
 const ExtractJwt = passportJWT.ExtractJwt;
 const JWTStrategy = passportJWT.Strategy;
@@ -40,7 +40,7 @@ module.exports = wagner => {
         //Attach strategy to passport instance
         passport.use(localStrategy);
 
-        //JWT
+        //JWT **Not currently utilized**
         let jwtStrategy = new JWTStrategy(jwtParams, function(payload, done) {
             User.findOne({
                     where: {

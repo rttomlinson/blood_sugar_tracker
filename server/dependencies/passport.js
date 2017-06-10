@@ -49,22 +49,29 @@ module.exports = wagner => {
                 })
                 .then(user => {
                     if (!user) {
-                        return done(new Error('User not found'), null);
+                        return done(null, false, new Error('User not found'));
                     }
                     return done(null, user);
                 })
                 .catch(done);
         });
         passport.use(jwtStrategy);
-        
-        // {
-        //     authenticateWithJWT: function() {
-        //         return passport.authenticate('jwt', { session: false })
-        //     }
-        // }
-        
-        
-        return passport;
+
+        return {
+            initialize: function() {
+                return passport.initialize();
+            },
+            authenticateWithJWT: function() {
+                return passport.authenticate('jwt', {
+                    session: false
+                });
+            },
+            authenticateWithLocal: function (){
+                return passport.authenticate("local", {
+                    session: false
+                });
+            }
+        };
     });
 
 

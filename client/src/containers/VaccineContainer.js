@@ -4,12 +4,17 @@ import {
     connect
 }
 from 'react-redux';
-import DashboardHeader from '../components/dashboard/DashboardHeader';
-import DashboardBody from '../components/dashboard/DashboardBody';
 import DashboardContainer  from './DashboardContainer';
 
 
 class VaccineContainer extends React.Component {
+    
+    //Need to load the vaccine in the state if not already present
+    
+    
+    
+    
+    
     
     render() {
         const userVaccines = this.props.userVaccines;

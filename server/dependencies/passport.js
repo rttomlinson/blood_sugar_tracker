@@ -2,6 +2,14 @@
 //use passport module
 let passport = require("passport");
 let LocalStrategy = require('passport-local').Strategy;
+//JWT
+const passportJWT = require('password-jwt');
+const ExtractJwt = passportJWT.ExtractJwt;
+const JWTStrategy = passportJWT.Strategy;
+const jwtParams = {
+    secretOrKey: process.env.JWT_SECRET,
+    jwtFromRequest: ExtractJwt.fromExtractors([ExtractJwt.fromBodyField(), ExtractJwt.fromUrlQueryParameter()])
+};
 
 module.exports = wagner => {
 
@@ -31,6 +39,34 @@ module.exports = wagner => {
 
         //Attach strategy to passport instance
         passport.use(localStrategy);
+
+        //JWT
+        let jwtStrategy = new JWTStrategy(jwtParams, function(payload, done) {
+            User.findOne({
+                    where: {
+                        id: payload.id
+                    }
+                })
+                .then(user => {
+                    if (!user) {
+                        return done(new Error('User not found'), null);
+                    }
+                    return done(null, user);
+                })
+                .catch(done);
+        });
+        passport.use(jwtStrategy);
+        
+        // {
+        //     authenticateWithJWT: function() {
+        //         return passport.authenticate('jwt', { session: false })
+        //     }
+        // }
+        
+        
         return passport;
     });
+
+
+
 };

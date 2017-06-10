@@ -102,7 +102,7 @@ export function loginUser({
                 localStorage.setItem("token", json.token);
                 dispatch(authUser()); //isAuthenticated gets set to true in the auth state
                 //route them to the dashboard
-                window.location = '/dashboard';
+                setTimeout(() => window.location = '/dashboard', 5000);
             })
             .catch(err => {
                 console.error("Error handler should dispatch error");

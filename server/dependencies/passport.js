@@ -3,7 +3,7 @@
 let passport = require("passport");
 let LocalStrategy = require('passport-local').Strategy;
 //JWT **Basic set up but not in use. Tests not available**
-const passportJWT = require('password-jwt');
+const passportJWT = require('passport-jwt');
 const ExtractJwt = passportJWT.ExtractJwt;
 const JWTStrategy = passportJWT.Strategy;
 const jwtParams = {
@@ -57,21 +57,8 @@ module.exports = wagner => {
         });
         passport.use(jwtStrategy);
 
-        return {
-            initialize: function() {
-                return passport.initialize();
-            },
-            authenticateWithJWT: function() {
-                return passport.authenticate('jwt', {
-                    session: false
-                });
-            },
-            authenticateWithLocal: function (){
-                return passport.authenticate("local", {
-                    session: false
-                });
-            }
-        };
+        return passport;
+ 
     });
 
 

@@ -1,45 +1,10 @@
-//try to auth by bearer
+//try to auth by bearer (JWT, not yet in use)
 //try to auth by username as password
 const url = require("url");
 
 module.exports = (User, passport, helpers, app, sequelize) => {
     //Shorten helpers for use in auth and routers
     const h = helpers.registered;
-    // let options = {
-    //     findUserByEmail: (email) => {
-    //         return User.findOne({
-    //             email: email
-    //         });
-    //     },
-    //     findUserByToken: (token) => {
-    //         return User.findOne({
-    //             token: token
-    //         });
-    //     },
-    //     validateUserPassword: (user, password) => {
-    //         return user.validatePassword(password);
-    //     }
-    // };
-
-
-    // const _options = {
-    //     loginUrl: '/login',
-    //     rootUrl: '/',
-    //     loginView: 'sessions/new',
-    //     unauthenticatedPaths: [
-    //         '/login',
-    //         '/user/new',
-    //         '/'
-    //     ]
-    // };
-
-
-    // Register options
-    // for (let key in options) {
-    //     _options[key] = options[key];
-    // }
-
-
     //start passport service
     app.use(passport.initialize());
     //if user is already logged in then req.user should be set
@@ -66,44 +31,18 @@ module.exports = (User, passport, helpers, app, sequelize) => {
 
     });
 
-
-    // ----------------------------------------
-    // Require Login/Logout
-    // ----------------------------------------
-    // app.use((req, res, next) => {
-    //     const reqUrl = url.parse(req.url).pathname;
-
-    //     // Is the user logged in?
-    //     const isLoggedIn = !!req.user;
-
-    //     // Is this an authenticated route?
-    //     const isAuthenticatedPath = !_options
-    //         .unauthenticatedPaths
-    //         .includes(reqUrl);
-
-    //     // User can proceed if
-    //     const canProceed =
-    //         // They are logged in and route
-    //         // is authenticated or
-    //         (isLoggedIn && isAuthenticatedPath) ||
-
-    //         // The path is unauthenticated
-    //         !isAuthenticatedPath;
-
-    //     // Redirect if cannot proceed
-    //     canProceed ? next() : res.redirect(_options.loginUrl);
-    // });
-
-
     //------------------------------
-    //User login
+    //User login/token
     //-----------------------------
     
     // ----------------------------------------
     // Login Handler
     // ----------------------------------------
-    app.post('/auth/login', passport.authenticateWithLocal, (req, res, next) => {
+    app.post('/auth/login', passport.authenticate("local", {
+                    session: false
+                }), (req, res, next) => {
         //need to create jwt token now sending only the id to the browser
+        console.log("passed to callback");
         res.json(req.user);
     });
 
@@ -151,3 +90,41 @@ module.exports = (User, passport, helpers, app, sequelize) => {
     });
 
 };
+
+
+
+//EXPLORE THESE OPTIONS LATER
+
+    // let options = {
+    //     findUserByEmail: (email) => {
+    //         return User.findOne({
+    //             email: email
+    //         });
+    //     },
+    //     findUserByToken: (token) => {
+    //         return User.findOne({
+    //             token: token
+    //         });
+    //     },
+    //     validateUserPassword: (user, password) => {
+    //         return user.validatePassword(password);
+    //     }
+    // };
+
+
+    // const _options = {
+    //     loginUrl: '/login',
+    //     rootUrl: '/',
+    //     loginView: 'sessions/new',
+    //     unauthenticatedPaths: [
+    //         '/login',
+    //         '/user/new',
+    //         '/'
+    //     ]
+    // };
+
+
+    // Register options
+    // for (let key in options) {
+    //     _options[key] = options[key];
+    // }

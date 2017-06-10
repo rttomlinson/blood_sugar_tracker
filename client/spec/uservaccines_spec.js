@@ -3,14 +3,14 @@ import install from 'jasmine-es6';
 install();
 import deepFreeze from 'deep-freeze';
 import vaccineReducer from '../src/reducers/vaccineReducer';
-import {FETCH_VACCINES_SUCCESS} from '../src/actions/types';
+import {FETCH_USER_VACCINE_DATA_SUCCESS} from '../src/actions/types';
 
 it("populates vaccine data", function() {
     const initialState = {
         data: []
     }
     const action = {
-        type: FETCH_VACCINES_SUCCESS,
+        type: FETCH_USER_VACCINE_DATA_SUCCESS,
         data: [{vaccine: 1}, {vaccine: 2}]
     }
     const finalState = {
@@ -30,7 +30,7 @@ import thunk from 'redux-thunk'
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
 import fetchMock from 'fetch-mock'
-import { fetchVaccineData } from '../src/actions/uservaccines';
+import { fetchUserVaccineData } from '../src/actions/uservaccines';
 import apiConfig from '../src/config/auth';
 
 describe('async actions', () => {
@@ -46,7 +46,7 @@ describe('async actions', () => {
             }
         })
         const expectedActions = [{
-            type: FETCH_VACCINES_SUCCESS,
+            type: FETCH_USER_VACCINE_DATA_SUCCESS,
             data: [{vaccine: 1}, {vaccine: 2}]
         }]
         const store = mockStore({
@@ -56,7 +56,7 @@ describe('async actions', () => {
         // .then(response => {
         //     expect(response.status).toEqual(200);
         // })
-        return store.dispatch(fetchVaccineData(token)).then(() => {
+        return store.dispatch(fetchUserVaccineData(token)).then(() => {
             // return of async actions
             expect(store.getActions()).toEqual(expectedActions)
         })

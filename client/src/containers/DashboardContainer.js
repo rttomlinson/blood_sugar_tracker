@@ -15,7 +15,6 @@ class DashboardContainer extends React.Component {
     
     componentDidMount(){
         console.log("dashboard container should mount");
-        this.props.fetchVaccineData();
     }
     
     
@@ -34,15 +33,15 @@ function mapStateToProps(state) {
         ...state
     };
 }
-function mapDispatchToProps(dispatch) {
-    return {
-        fetchStats: (token) => {
-            dispatch(fetchUserStats(token));
-        },
-        fetchVaccineData: () => {
-            dispatch(fetchVaccineData());
-        }
-    };
-}
+// function mapDispatchToProps(dispatch) {
+//     return {
+//         fetchStats: (token) => {
+//             dispatch(fetchUserStats(token));
+//         },
+//         fetchVaccineData: () => {
+//             dispatch(fetchVaccineData());
+//         }
+//     };
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardContainer);
+export default connect(mapStateToProps)(DashboardContainer);

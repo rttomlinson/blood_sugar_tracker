@@ -1,5 +1,5 @@
 import {
-    FETCH_VACCINES_SUCCESS
+    FETCH_USER_VACCINE_DATA_SUCCESS
 }
 from '../actions/types';
 
@@ -12,7 +12,7 @@ let INITIAL_VACCINE_STATE = {
 
 function vaccineReducer(state = INITIAL_VACCINE_STATE, action) {
     switch (action.type) {
-        case FETCH_VACCINES_SUCCESS:
+        case FETCH_USER_VACCINE_DATA_SUCCESS:
             return {
                 ...state,
                 data: action.data

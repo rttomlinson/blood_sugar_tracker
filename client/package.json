@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "deep-freeze": "0.0.1",
+    "fetch-mock": "^5.11.0",
     "jasmine-es6": "^0.4.0",
     "nodemon": "^1.11.0",
     "react-scripts": "^1.0.5",

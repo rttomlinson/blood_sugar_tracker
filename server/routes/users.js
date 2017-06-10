@@ -6,9 +6,6 @@ module.exports = (User, sequelize, BloodSugarRecord, Profile, Dose, helpers, Vac
     const BSR = BloodSugarRecord;
     const h = helpers.registered;
 
-    router.get("/", function(req, res, next) {
-        res.render("users/show");
-    });
 
     router.get('/stats', (req, res, next) => {
         //We want to get all the medical info

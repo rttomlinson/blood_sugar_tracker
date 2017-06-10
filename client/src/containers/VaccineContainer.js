@@ -7,6 +7,20 @@ from 'react-redux';
 import DashboardContainer  from './DashboardContainer';
 import { fetchUserVaccineData } from '../actions/uservaccines';
 
+function displayVaccineInfo(vaccines) {
+    return vaccines.map((vaccine) => {
+        return (
+            <div>
+                <p>Name: {vaccine.VaccineDose.Vaccine.name}</p>
+                <p>Completed: {vaccine.completed ? "True" : "False"}</p>
+            </div>
+        );
+    });
+    
+}
+
+
+
 class VaccineContainer extends React.Component {
     
     //Need to load the vaccine in the state if not already present
@@ -22,7 +36,7 @@ class VaccineContainer extends React.Component {
         console.log(userVaccines);
         return (
             <div>
-                Vaccines here
+                {displayVaccineInfo(userVaccines.data)}
             </div>
         );
     }

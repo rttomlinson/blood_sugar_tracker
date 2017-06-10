@@ -28,16 +28,6 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-//--------------------
-//Express session
-//--------------------
-// const expressSession = require("express-session");
-// app.use(expressSession({
-//     secret: 'keyboard cat',
-//     resave: false,
-//     saveUninitialized: false,
-//     cookie: {}
-// }));
 
 //--------------------------
 //Logger
